@@ -1,106 +1,237 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500&display=swap");
 
-  color: #333333;
-  background-color: #fafafa;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+* {
+    font-family:
+        "Inter",
+        system-ui,
+        -apple-system,
+        sans-serif;
 }
 
-a {
-  font-weight: 500;
-  color: #666666;
-  text-decoration: inherit;
+.font-mono {
+    font-family: "JetBrains Mono", "Courier New", monospace;
 }
-a:hover {
-  color: #333333;
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
-  position: relative;
-  overflow: hidden;
+    font-feature-settings: "kern" 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: #000;
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image:
-    radial-gradient(circle at 25% 25%, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
-  background-size: 80px 80px;
-  animation: float 30s ease-in-out infinite;
-  pointer-events: none;
-  z-index: -1;
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 4px;
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  33% { transform: translateY(-10px) rotate(1deg); }
-  66% { transform: translateY(5px) rotate(-1deg); }
+::-webkit-scrollbar-track {
+    background: transparent;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+::-webkit-scrollbar-thumb {
+    background: #00ffff;
+    border-radius: 2px;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid #e0e0e0;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #ffffff;
-  color: #333333;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-button:hover {
-  border-color: #cccccc;
-  background-color: #f9f9f9;
-}
-button:focus,
-button:focus-visible {
-  outline: 2px solid #666666;
-  outline-offset: 2px;
+::-webkit-scrollbar-thumb:hover {
+    background: #00cccc;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-  body {
-    background:
-      radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.15) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 40% 80%, rgba(120, 219, 226, 0.1) 0%, transparent 50%),
-      linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #cbd5e1 100%);
-  }
-  body::before {
-    background-image:
-      radial-gradient(circle at 25% 25%, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-      radial-gradient(circle at 75% 75%, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-  }
+/* Cybernetic animations */
+@keyframes scan {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(256px);
+        opacity: 0;
+    }
+}
+
+.animate-scan {
+    animation: scan 3s ease-in-out infinite;
+}
+
+/* Glitch effect */
+.glitch-text {
+    position: relative;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+.glitch-text::before {
+    animation: glitch-1 0.5s infinite;
+    color: #ff0000;
+    z-index: -1;
+}
+
+.glitch-text::after {
+    animation: glitch-2 0.5s infinite;
+    color: #00ffff;
+    z-index: -2;
+}
+
+@keyframes glitch-1 {
+    0%,
+    14%,
+    15%,
+    49%,
+    50%,
+    99%,
+    100% {
+        transform: translate(0);
+        opacity: 0;
+    }
+    15%,
+    49% {
+        transform: translate(-2px, -1px);
+        opacity: 0.7;
+    }
+}
+
+@keyframes glitch-2 {
+    0%,
+    20%,
+    21%,
+    62%,
+    63%,
+    99%,
+    100% {
+        transform: translate(0);
+        opacity: 0;
+    }
+    21%,
+    62% {
+        transform: translate(2px, 1px);
+        opacity: 0.7;
+    }
+}
+
+/* Cybernetic glow effects */
+@keyframes pulse-glow {
+    0%,
+    100% {
+        box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+    }
+}
+
+.pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Smooth transitions for all interactive elements */
+@layer base {
+    * {
+        @apply transition-colors duration-300;
+    }
+}
+
+/* Custom selection */
+::selection {
+    background: rgba(0, 255, 255, 0.3);
+    color: white;
+}
+
+/* Cybernetic border animations */
+@keyframes border-flow {
+    0% {
+        border-image-source: linear-gradient(
+            90deg,
+            transparent,
+            #00ffff,
+            transparent
+        );
+    }
+    50% {
+        border-image-source: linear-gradient(
+            90deg,
+            #00ffff,
+            transparent,
+            #00ffff
+        );
+    }
+    100% {
+        border-image-source: linear-gradient(
+            90deg,
+            transparent,
+            #00ffff,
+            transparent
+        );
+    }
+}
+
+.border-flow {
+    border-image-slice: 1;
+    animation: border-flow 3s ease-in-out infinite;
+}
+
+/* Matrix-style text effect */
+@keyframes matrix-rain {
+    0% {
+        transform: translateY(-100vh);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+}
+
+.matrix-rain {
+    animation: matrix-rain 10s linear infinite;
+}
+
+/* Hover effects for interactive elements */
+.hover-glow:hover {
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Terminal-style cursor */
+@keyframes blink {
+    0%,
+    50% {
+        opacity: 1;
+    }
+    51%,
+    100% {
+        opacity: 0;
+    }
+}
+
+.terminal-cursor::after {
+    content: "_";
+    animation: blink 1s infinite;
+    color: #00ffff;
 }
