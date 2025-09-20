@@ -1,30 +1,19 @@
 import { useEffect, useState } from "react";
-import { Footer } from "./components/layout/Footer";
-import {
-  Mail,
-  Linkedin,
-  Terminal,
-  Code,
-  Contrast,
-  TrendingUp,
-  Github,
-} from "lucide-react";
+import { Mail, Linkedin, Terminal, Github } from "lucide-react";
 import {
   CORE_TECH,
   CUBE_TITLE,
   CURSOR_GLOW_TRANSITION,
-  HEADER_ONLINE,
   HERO_DESC,
   HERO_JOB_TITLE,
   HERO_TOP_TITLE,
-  LOCATION,
   SKILLS_DESC,
   SKILLS_DESC_TITLE,
   SKILLS_LIST,
   SKILLS_SUBTITLE,
   SKILLS_TITLE,
-} from "./constants/ui";
-import { Header } from "./components/layout/Header";
+} from "@constants/ui";
+import { Header, Footer } from "@layout";
 
 function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });

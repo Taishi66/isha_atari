@@ -3,7 +3,7 @@ interface HeaderProps {
   currentTime: Date;
 }
 
-export function Header({ currentTime }: HeaderProps) {
+const Header = ({ currentTime }: HeaderProps) => {
   return (
     <header className="fixed top-0 left-0 right-0 z-40 p-6 backdrop-blur-sm bg-black/20 border-b border-cyan-500/20">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -21,4 +21,6 @@ export function Header({ currentTime }: HeaderProps) {
       </div>
     </header>
   );
-}
+};
+
+export default Header;
