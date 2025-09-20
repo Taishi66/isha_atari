@@ -8,7 +8,8 @@ export const HERO_DESC =
 export const CUBE_TITLE = "UI_RENDER_ENGINE";
 export const SKILLS_TITLE = "EXPERTISE_MATRIX";
 export const SKILLS_SUBTITLE = "Areas of Expertise";
-export const SKILLS_DESC_TITLE = "Crafting fast, accessible interfaces that scale.";
+export const SKILLS_DESC_TITLE =
+  "Crafting fast, accessible interfaces that scale.";
 export const SKILLS_DESC =
   "I build frontend systems with a focus on performance, accessibility, and maintainability. From component design systems to end-to-end developer experience, I bridge the gap between design and engineering.";
 
@@ -17,3 +18,4 @@ export const CONTACT_TITLE = "ESTABLISH_CONNECTION";
 export const CONTACT_SUBTITLE = "Let's collaborate";
 export const CONTACT_DESC =
   "Open to contract work, product collaborations, and frontend consulting. Available for remote positions and short-termengagements.";
+export const CRAFTED = "CRAFTED_WITH_CLAUDE";

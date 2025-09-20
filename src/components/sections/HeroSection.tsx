@@ -7,7 +7,13 @@ import {
 } from "@/constants/ui";
 import { Terminal } from "lucide-react";
 
-const HeroSection = ({ glitchText }: { glitchText: string }) => {
+interface HeroSectionProps {
+  glitchText: string;
+  onTerminalClick: () => void;
+}
+
+const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
+
   return (
     <section className="min-h-screen flex items-center justify-center px-8 pt-20">
       <div className="max-w-6xl w-full">
@@ -56,7 +62,10 @@ const HeroSection = ({ glitchText }: { glitchText: string }) => {
           </div>
 
           {/* Cybernetic Visual Element */}
-          <div className="lg:col-span-2 space-y-8">
+          <div
+            className="lg:col-span-2 space-y-8"
+            onClick={onTerminalClick}
+          >
             <div className="relative">
               <div className="w-64 h-64 border border-cyan-500/30 relative group">
                 {/* Animated corners */}

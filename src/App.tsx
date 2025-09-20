@@ -6,12 +6,14 @@ import {
   ExpertiseSection,
   ContactSection,
   FloatingCursor,
+  TerminalWindow,
 } from "@/components";
 import { useGlitchEffect } from "./hooks";
 
 function App() {
   const [glitchText, setGlitchText] = useState<string>("JC LAMY");
   const [currentTime, setCurrentTime] = useState<Date>(new Date());
+  const [isTerminalOpen, setIsTerminalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -29,26 +31,28 @@ function App() {
     <div className="min-h-screen bg-black text-white overflow-hidden relative">
       {/* Cybernetic Grid Background */}
       <div className="fixed inset-0 opacity-5">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `
-            linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px)
-          `,
-            backgroundSize: "50px 50px",
-          }}
-        ></div>
+        <div className="absolute inset-0 cybergrid-color"></div>
       </div>
       <FloatingCursor />
 
       <main className="relative z-10">
-        <Header currentTime={currentTime} />
-        <HeroSection glitchText={glitchText} />
+        <Header
+          currentTime={currentTime}
+          onTerminalClick={() => setIsTerminalOpen(true)}
+        />
+        <HeroSection
+          glitchText={glitchText}
+          onTerminalClick={() => setIsTerminalOpen(true)}
+        />
         <ExpertiseSection />
         <ContactSection />
         <Footer />
       </main>
+
+      <TerminalWindow
+        isOpen={isTerminalOpen}
+        onClose={() => setIsTerminalOpen(false)}
+      />
     </div>
   );
 }

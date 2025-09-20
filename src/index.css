@@ -61,8 +61,26 @@ body {
     }
 }
 
+@keyframes scan2 {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(600px);
+        opacity: 0;
+    }
+}
+
 .animate-scan {
     animation: scan 3s ease-in-out infinite;
+}
+
+.animate-scan2 {
+    animation: scan2 3s ease-in-out infinite;
 }
 
 /* Glitch effect */
@@ -216,22 +234,4 @@ body {
 .hover-glow:hover {
     box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
     transform: translateY(-2px);
-}
-
-/* Terminal-style cursor */
-@keyframes blink {
-    0%,
-    50% {
-        opacity: 1;
-    }
-    51%,
-    100% {
-        opacity: 0;
-    }
-}
-
-.terminal-cursor::after {
-    content: "_";
-    animation: blink 1s infinite;
-    color: #00ffff;
 }

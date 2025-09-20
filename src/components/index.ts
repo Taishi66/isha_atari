@@ -4,6 +4,7 @@
 // Layout components
 export { default as Header } from "./layout/Header";
 export { default as Footer } from "./layout/Footer";
+export { default as TerminalWindow } from "./layout/TerminalWindow";
 
 // Section components
 export { default as HeroSection } from "./sections/HeroSection";
