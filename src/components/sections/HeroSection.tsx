@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   CORE_TECH,
   CUBE_TITLE,
@@ -6,6 +7,7 @@ import {
   HERO_TOP_TITLE,
 } from "@/constants/ui";
 import { Terminal } from "lucide-react";
+import { useComponentPerformance } from "@/utils/performance";
 
 interface HeroSectionProps {
   glitchText: string;
@@ -13,6 +15,11 @@ interface HeroSectionProps {
 }
 
 const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
+  const { recordRender } = useComponentPerformance('HeroSection');
+
+  useEffect(() => {
+    recordRender();
+  }, [recordRender]);
 
   return (
     <section className="min-h-screen flex items-center justify-center px-8 pt-20">

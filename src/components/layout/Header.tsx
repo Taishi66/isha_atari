@@ -1,5 +1,5 @@
 import { HEADER_ONLINE, LOCATION, STATUS } from "@/constants/ui";
-import { formatTime } from "@/utils/TimeStamp";
+import { formatTime } from "@/utils/timestamp";
 import { Terminal } from "lucide-react";
 
 interface HeaderProps {

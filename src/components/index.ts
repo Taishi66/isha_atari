@@ -11,8 +11,11 @@ export { default as HeroSection } from "./sections/HeroSection";
 export { default as ExpertiseSection } from "./sections/ExpertiseSection";
 export { default as ContactSection } from "./sections/ContactSection";
 
-// UI components (when you add them)
+// UI components
 export { default as FloatingCursor } from "./ui/FloatingCursor";
+
+// Common components
+export { ErrorBoundary } from "./common/ErrorBoundary";
 
 // export { default as Button } from "./ui/Button";
 // export { default as Card } from "./ui/Card";
