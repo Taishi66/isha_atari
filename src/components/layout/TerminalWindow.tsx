@@ -195,7 +195,7 @@ const TerminalInput = memo(({
                     autoFocus={!disabled}
                 />
                 {/* Cursor indicator */}
-                <span className="animate-pulse text-cyan-400 select-none" aria-hidden="true">
+                <span className="animate-pulse text-[#00D9FF] select-none" aria-hidden="true">
                     {currentInput.length === 0 ? '_' : ''}
                 </span>
             </div>
@@ -353,7 +353,14 @@ const TerminalWindow = ({ isOpen, onClose, className, testId }: TerminalWindowPr
                     {/* Scanning line animation - positioned behind content */}
                     <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
                         <div className={TERMINAL_STYLES.decorations.scanLine.line} />
+                        {/* Multiple scanning lines with different speeds and opacities */}
+                        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#00D9FF]/15 to-transparent animate-scan absolute" style={{ animationDelay: '1s' }} />
+                        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#00D9FF]/10 to-transparent animate-scanFast absolute" style={{ animationDelay: '0.5s' }} />
+                        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#00D9FF]/20 to-transparent animate-scanSlow absolute" style={{ animationDelay: '3s' }} />
+                        {/* Subtle background flicker effect */}
+                        <div className="absolute inset-0 bg-[#00D9FF]/2 animate-flicker" />
                     </div>
+
 
                     {/* Terminal Header - positioned above decorations */}
                     <div className="relative z-10 flex-shrink-0">
@@ -366,6 +373,13 @@ const TerminalWindow = ({ isOpen, onClose, className, testId }: TerminalWindowPr
 
                     {/* Terminal Content - positioned above decorations */}
                     <main className={combineClasses(TERMINAL_STYLES.content.container, "relative z-10 flex-1 min-h-0")}>
+                        {/* Additional scanning effects over content area */}
+                        <div className="absolute inset-0 overflow-hidden pointer-events-none z-5">
+                            <div className="w-full h-px bg-gradient-to-r from-transparent via-[#00D9FF]/8 to-transparent animate-scan absolute" style={{ animationDelay: '2s' }} />
+                            <div className="w-full h-px bg-gradient-to-r from-transparent via-[#00D9FF]/5 to-transparent animate-scanFast absolute" style={{ animationDelay: '1.5s' }} />
+                            <div className="w-full h-px bg-gradient-to-r from-transparent via-[#00D9FF]/10 to-transparent animate-scanSlow absolute" style={{ animationDelay: '6s' }} />
+                        </div>
+
                         {/* Output Area */}
                         <TerminalOutput
                             lines={state.lines}
@@ -384,7 +398,7 @@ const TerminalWindow = ({ isOpen, onClose, className, testId }: TerminalWindowPr
                         {/* Loading Overlay - Only covers main content */}
                         {isLoading && (
                             <div className="absolute inset-0 flex items-center justify-center bg-black/80 z-20 pointer-events-none">
-                                <div className="text-cyan-400 font-mono">
+                                <div className="text-[#00D9FF] font-mono">
                                     <div className="animate-pulse">Initializing terminal...</div>
                                 </div>
                             </div>
@@ -393,7 +407,7 @@ const TerminalWindow = ({ isOpen, onClose, className, testId }: TerminalWindowPr
 
                     {/* Status Bar (Optional) */}
                     {import.meta.env.DEV && (
-                        <div className="px-4 py-1 text-xs text-gray-500 border-t border-cyan-500/20 bg-gray-900/50">
+                        <div className="px-4 py-1 text-xs text-gray-500 border-t border-[#00D9FF]/20 bg-gray-900/50">
                             Lines: {state.lines.length} | History: {state.commandHistory.length} |
                             {state.isMaximized ? ' Maximized' : ' Normal'}
                         </div>

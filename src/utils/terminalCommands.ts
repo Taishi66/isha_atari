@@ -45,10 +45,10 @@ const createLine = (
 // ============================================================================
 
 export const INITIAL_LINES: readonly TerminalLine[] = [
-  createLine("CYBERNETIC TERMINAL v2.4.1", 'system'),
+  createLine("CYBERNETIC TERMINAL v5.0.1", 'system'),
   createLine("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", 'separator'),
   createLine("System initialized successfully", 'system'),
-  createLine("Type 'help' for available commands", 'system'),
+  createLine("Type 'help' for available commands", 'info'),
   createLine("", 'output'),
 ];
 
@@ -127,20 +127,20 @@ export const terminalCommands: Record<string, TerminalCommand> = {
     aliases: ['info'],
     execute: (): CommandResult => ({
       lines: [
-        createLine("CYBERNETIC PORTFOLIO SYSTEM v2.4.1", 'system'),
+        createLine("CYBERNETIC PORTFOLIO SYSTEM v5.0.1", 'system'),
         createLine("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", 'separator'),
-        createLine("Architecture: React 18 + TypeScript + Vite"),
-        createLine("Styling: Tailwind CSS with custom cybernetic theme"),
-        createLine("State Management: Advanced Context + useReducer"),
-        createLine("Error Handling: Comprehensive boundary system"),
-        createLine("Performance: Optimized with React.memo and useMemo"),
-        createLine(""),
-        createLine("🚀 Portfolio of JC LAMY - Senior Full Stack Developer"),
-        createLine("📍 Based in Paris, France"),
-        createLine("⚡ 15+ years of experience in modern web development"),
-        createLine(""),
-        createLine("Built with ❤️  and lots of ☕"),
-        createLine(""),
+        createLine("Architecture: React 18 + TypeScript + Vite", 'output'),
+        createLine("Styling: Tailwind CSS with cybernetic design system", 'output'),
+        createLine("State Management: Advanced Context + useReducer", 'output'),
+        createLine("Error Handling: Comprehensive boundary system", 'output'),
+        createLine("Performance: Optimized with React.memo and useMemo", 'output'),
+        createLine("", 'output'),
+        createLine("Portfolio of JC LAMY - Senior Full Stack Developer", 'info'),
+        createLine("Based in Paris, France", 'info'),
+        createLine("15+ years of experience in modern web development", 'info'),
+        createLine("", 'output'),
+        createLine("Built with precision and attention to detail", 'info'),
+        createLine("", 'output'),
       ],
       shouldClose: false,
       shouldClear: false,
@@ -412,22 +412,22 @@ export const getLineClassName = (line: TerminalLine): string => {
 
   switch (line.type) {
     case 'command':
-      return `${baseClasses} text-cyan-400 font-medium`;
+      return `${baseClasses} text-[#00D9FF] font-medium`;
     case 'system':
-      return `${baseClasses} text-orange-400 font-bold`;
+      return `${baseClasses} text-[#00D9FF] font-bold`;
     case 'separator':
-      return `${baseClasses} text-orange-500/60`;
+      return `${baseClasses} text-[#00D9FF]/60`;
     case 'error':
       return `${baseClasses} text-red-400 font-medium`;
     case 'warning':
-      return `${baseClasses} text-yellow-400`;
+      return `${baseClasses} text-orange-400`;
     case 'success':
       return `${baseClasses} text-green-400`;
     case 'info':
-      return `${baseClasses} text-blue-400`;
+      return `${baseClasses} text-[#00D9FF]/80`;
     case 'output':
     default:
-      return `${baseClasses} text-gray-300`;
+      return `${baseClasses} text-[#FFFFFF]`;
   }
 };
 

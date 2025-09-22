@@ -7,8 +7,8 @@ export const TERMINAL_STYLES = {
 
   window: {
     base: `
-      relative bg-black border-2 border-cyan-500/50 rounded-lg overflow-hidden
-      transition-all duration-700 ease-out font-mono shadow-2xl shadow-cyan-500/20
+      relative bg-black border-2 border-[#00D9FF]/50 rounded-lg overflow-hidden
+      transition-all duration-700 ease-out font-mono shadow-2xl shadow-[#00D9FF]/20
       transform-gpu flex flex-col
     `,
     open: "scale-100 opacity-100",
@@ -19,38 +19,38 @@ export const TERMINAL_STYLES = {
 
   header: {
     container:
-      "flex items-center justify-between px-4 py-3 bg-gray-900/90 border-b border-cyan-500/30 flex-shrink-0",
+      "flex items-center justify-between px-4 py-3 bg-gray-900/90 border-b border-[#00D9FF]/30 flex-shrink-0",
     leftSection: "flex items-center space-x-3",
-    title: "text-cyan-400 text-sm font-mono font-semibold",
+    title: "text-[#00D9FF] text-sm font-mono font-semibold",
     controls: "flex items-center space-x-2",
-    button: "text-gray-400 hover:text-cyan-400 transition-colors duration-200",
+    button: "text-gray-400 hover:text-[#00D9FF] transition-colors duration-200",
     closeButton:
       "text-gray-400 hover:text-red-400 transition-colors duration-200",
   },
 
   content: {
     container: "relative flex flex-col h-full min-h-0",
-    output: "flex-1 p-4 overflow-y-auto bg-black/90 min-h-0",
-    outputInner: "space-y-1 text-sm",
+    output: "flex-1 p-4 overflow-y-auto bg-black/90 min-h-0 relative",
+    outputInner: "space-y-1 text-sm relative z-10",
     input: {
-      container: "flex-shrink-0 px-4 py-3 border-t border-cyan-500/30 bg-gray-900/30 relative z-10",
+      container: "flex-shrink-0 px-4 py-3 border-t border-[#00D9FF]/30 bg-gray-900/30 relative z-10",
       wrapper: "flex items-center space-x-2 text-sm",
-      prompt: "text-cyan-400 select-none flex-shrink-0",
+      prompt: "text-[#00D9FF] select-none flex-shrink-0",
       field:
-        "flex-1 bg-transparent text-orange-400 outline-none font-mono placeholder:text-orange-400/60 focus:ring-0 focus:border-none min-w-0",
+        "flex-1 bg-transparent text-[#FFFFFF] outline-none font-mono placeholder:text-[#FFFFFF]/60 focus:ring-0 focus:border-none min-w-0",
     },
   },
 
   decorations: {
     borders: "absolute inset-0 pointer-events-none",
-    cornerBorder: "absolute w-8 h-8 border-cyan-400",
+    cornerBorder: "absolute w-8 h-8 border-[#00D9FF]",
     topLeft: "top-0 left-0 border-t-2 border-l-2",
     topRight: "top-0 right-0 border-t-2 border-r-2",
     bottomLeft: "bottom-0 left-0 border-b-2 border-l-2",
     bottomRight: "bottom-0 right-0 border-b-2 border-r-2",
     scanLine: {
       container: "absolute inset-0 overflow-hidden pointer-events-none",
-      line: "w-full h-px bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent animate-scan2",
+      line: "w-full h-px bg-gradient-to-r from-transparent via-[#00D9FF]/25 to-transparent animate-scanSlow",
     },
   },
 } as const;

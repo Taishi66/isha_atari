@@ -44,6 +44,10 @@ const config: Config = {
         'slide-up': 'slideUp 0.5s ease-out',
         'slide-down': 'slideDown 0.5s ease-out',
         'float': 'float 6s ease-in-out infinite',
+        scan: 'scan 4s linear infinite',
+        scanSlow: 'scanSlow 12s linear infinite',
+        scanFast: 'scanFast 2s linear infinite',
+        flicker: 'flicker 1.5s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
@@ -62,6 +66,22 @@ const config: Config = {
           '0%, 100%': { transform: 'translateY(0px)' },
           '50%': { transform: 'translateY(-10px)' },
         },
+        scan: {
+          '0%': { transform: 'translateY(-100%)' },
+          '100%': { transform: 'translateY(100vh)' }
+        },
+        scanSlow: {
+          '0%': { transform: 'translateY(-100%)' },
+          '100%': { transform: 'translateY(100vh)' }
+        },
+        scanFast: {
+          '0%': { transform: 'translateY(-100%)' },
+          '100%': { transform: 'translateY(100vh)' }
+        },
+        flicker: {
+          '0%, 100%': { opacity: '0.3' },
+          '50%': { opacity: '0.8' }
+        }
       },
     },
   },
