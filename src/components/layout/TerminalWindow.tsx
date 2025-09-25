@@ -356,8 +356,8 @@ const TerminalWindow = ({ isOpen, onClose, className, testId }: TerminalWindowPr
 
                     {/* Minimal scanning animation */}
                     <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-                        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#00D9FF]/20 to-transparent animate-scan absolute" />
-                        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#00D9FF]/10 to-transparent animate-scan absolute" style={{ animationDelay: '2s' }} />
+                        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#00D9FF]/20 to-transparent animate-scanSlow absolute" />
+                        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#00D9FF]/10 to-transparent animate-scanSlow absolute" style={{ animationDelay: '2s' }} />
                     </div>
 
 
@@ -373,7 +373,7 @@ const TerminalWindow = ({ isOpen, onClose, className, testId }: TerminalWindowPr
                     <main className={combineClasses(TERMINAL_STYLES.content.container, "relative z-10 flex-1 min-h-0")}>
                         {/* Minimal content area effects */}
                         <div className="absolute inset-0 overflow-hidden pointer-events-none z-5">
-                            <div className="w-full h-px bg-gradient-to-r from-transparent via-[#00D9FF]/5 to-transparent animate-scan absolute" style={{ animationDelay: '4s' }} />
+                            <div className="w-full h-px bg-gradient-to-r from-transparent via-[#00D9FF]/5 to-transparent animate-scanSlow absolute" style={{ animationDelay: '4s' }} />
                         </div>
 
                         {/* Output Area */}

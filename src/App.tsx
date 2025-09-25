@@ -13,7 +13,13 @@ import {
 import { useGlitchEffect } from "@/hooks";
 
 function App() {
-    const { glitchText } = useGlitchEffect({ text: "ISHA ATARI" });
+    const { glitchText } = useGlitchEffect({
+        text: "ISHA ATARI",
+        interval: 3500, // Average 3.5 seconds
+        randomnessFactor: 0.43, // For a range of approx 2s to 5s
+        glitchDuration: 50, // Shorter, snappier glitch
+        intensity: 0.15, // Slightly more aggressive digital noise
+    });
     const [currentTime, setCurrentTime] = useState<Date>(new Date());
     const [isTerminalOpen, setIsTerminalOpen] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -46,8 +52,8 @@ function App() {
 
             {/* Main Application */}
             <div className={`min-h-screen bg-black text-white overflow-hidden relative transition-all duration-1000 ease-out ${isLoading
-                    ? 'opacity-0 scale-105 blur-sm'
-                    : 'opacity-100 scale-100 blur-0'
+                ? 'opacity-0 scale-105 blur-sm'
+                : 'opacity-100 scale-100 blur-0'
                 }`}>
                 {/* Cybernetic Grid Background */}
                 <div className="fixed inset-0 opacity-5">
