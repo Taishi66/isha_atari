@@ -1,20 +1,24 @@
 export const TERMINAL_STYLES = {
   overlay: {
-    base: "fixed inset-0 z-50 flex items-center justify-center p-4 transition-all duration-500 ease-out",
+    base: "fixed inset-0 z-50 flex items-center justify-center p-4 transition-all duration-700 ease-out",
     open: "opacity-100 backdrop-blur-sm bg-black/50",
     closed: "opacity-0 pointer-events-none",
   },
 
   window: {
     base: `
-      relative bg-black border-2 border-[#00D9FF]/50 rounded-lg overflow-hidden
-      transition-all duration-700 ease-out font-mono shadow-2xl shadow-[#00D9FF]/20
-      transform-gpu flex flex-col
+      relative bg-black border-2 border-[#00D9FF]/50 overflow-hidden
+      font-mono shadow-2xl shadow-[#00D9FF]/20 flex flex-col
+      transition-all duration-800 cubic-bezier(0.16, 1, 0.3, 1)
     `,
-    open: "scale-100 opacity-100",
-    closed: "scale-75 opacity-0",
-    normal: "w-4/5 max-w-4xl h-3/4 max-h-[600px] min-h-[400px]",
-    maximized: "w-full h-full max-h-screen",
+    open: "opacity-100 transform-none",
+    closed: "opacity-0 pointer-events-none transform scale-95",
+    normal: `w-4/5 max-w-4xl h-3/4 max-h-[600px] min-h-[400px] rounded-lg
+             transition-all duration-800 cubic-bezier(0.16, 1, 0.3, 1)
+             hover:shadow-[0_0_30px_rgba(0,217,255,0.3)]`,
+    maximized: `w-full h-full max-h-screen rounded-none
+                transition-all duration-800 cubic-bezier(0.16, 1, 0.3, 1)
+                shadow-[0_0_50px_rgba(0,217,255,0.4)]`,
   },
 
   header: {

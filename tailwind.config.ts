@@ -40,14 +40,16 @@ const config: Config = {
         mono: ['Fira Code', 'monospace'],
       },
       animation: {
-        'fade-in': 'fadeIn 0.5s ease-in-out',
-        'slide-up': 'slideUp 0.5s ease-out',
-        'slide-down': 'slideDown 0.5s ease-out',
-        'float': 'float 6s ease-in-out infinite',
+        'fade-in': 'fadeIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+        'slide-up': 'slideUp 0.8s cubic-bezier(0.23, 1, 0.320, 1)',
+        'slide-down': 'slideDown 0.8s cubic-bezier(0.23, 1, 0.320, 1)',
+        'float': 'float 6s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite',
+        'smooth-scale': 'smoothScale 1s cubic-bezier(0.23, 1, 0.320, 1)',
+        'fluid-expand': 'fluidExpand 1s cubic-bezier(0.23, 1, 0.320, 1)',
         scan: 'scan 4s linear infinite',
         scanSlow: 'scanSlow 12s linear infinite',
         scanFast: 'scanFast 2s linear infinite',
-        flicker: 'flicker 1.5s ease-in-out infinite',
+        flicker: 'flicker 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite',
       },
       keyframes: {
         fadeIn: {
@@ -81,6 +83,31 @@ const config: Config = {
         flicker: {
           '0%, 100%': { opacity: '0.3' },
           '50%': { opacity: '0.8' }
+        },
+        smoothScale: {
+          '0%': { transform: 'scale(0.75)', opacity: '0' },
+          '50%': { transform: 'scale(1.02)', opacity: '0.8' },
+          '100%': { transform: 'scale(1)', opacity: '1' }
+        },
+        fluidExpand: {
+          '0%': {
+            width: '20%',
+            height: '20%',
+            borderRadius: '16px',
+            transform: 'scale(0.8)',
+            opacity: '0.3'
+          },
+          '50%': {
+            transform: 'scale(1.01)',
+            opacity: '0.9'
+          },
+          '100%': {
+            width: '100%',
+            height: '100%',
+            borderRadius: '0px',
+            transform: 'scale(1)',
+            opacity: '1'
+          }
         }
       },
     },

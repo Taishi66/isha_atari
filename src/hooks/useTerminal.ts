@@ -165,7 +165,8 @@ export const useTerminal = ({
   // ============================================================================
 
   const availableCommands = useMemo(() => [
-    'test', 'help', 'clear', 'about', 'skills', 'contact', 'projects', 'exit', 'whoami', 'ls', 'pwd'
+    'test', 'help', 'clear', 'about', 'skills', 'contact', 'projects', 'exit', 'whoami', 'ls', 'pwd',
+    'cat', 'cd', 'echo', 'history', 'uname', 'sudo', 'man'
   ], []);
 
   // ============================================================================

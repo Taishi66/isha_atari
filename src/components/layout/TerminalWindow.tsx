@@ -52,44 +52,38 @@ const TerminalHeader = memo(({
     <header className={TERMINAL_STYLES.header.container}>
         <div className={TERMINAL_STYLES.header.leftSection}>
             <div className="flex items-center space-x-2">
-                {/* macOS-style traffic lights */}
-                <div className="flex items-center space-x-1.5">
-                    <div
-                        className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-400 cursor-pointer transition-colors"
-                        onClick={onClose}
-                        role="button"
-                        aria-label="Close terminal"
-                        tabIndex={0}
-                        onKeyDown={(e) => e.key === 'Enter' && onClose()}
-                        title="Close terminal"
-                    />
-                    <div
-                        className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-400 cursor-pointer transition-colors"
-                        onClick={onClose}
-                        role="button"
-                        aria-label="Close terminal"
-                        tabIndex={0}
-                        onKeyDown={(e) => e.key === 'Enter' && onClose()}
-                        title="Close terminal (minimize not available in web)"
-                    />
-                    <div
-                        className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-400 cursor-pointer transition-colors"
-                        onClick={onToggleMaximize}
-                        role="button"
-                        aria-label={isMaximized ? "Restore terminal" : "Maximize terminal"}
-                        tabIndex={0}
-                        onKeyDown={(e) => e.key === 'Enter' && onToggleMaximize()}
-                        title={isMaximized ? "Restore terminal" : "Maximize terminal"}
-                    />
+                {/* Cybernetic control buttons */}
+                <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-1.5 px-2 py-1 rounded bg-black/30 border border-[#00D9FF]/20">
+                        <button
+                            className="w-2 h-2 bg-red-400/80 hover:bg-red-400 transition-all duration-200 hover:shadow-[0_0_6px_rgba(248,113,113,0.6)] cursor-pointer"
+                            onClick={onClose}
+                            aria-label="Close terminal"
+                            title="Close terminal"
+                        />
+                        <button
+                            className="w-2 h-2 bg-[#00D9FF]/80 hover:bg-[#00D9FF] transition-all duration-200 hover:shadow-[0_0_6px_rgba(0,217,255,0.6)] cursor-pointer"
+                            onClick={onToggleMaximize}
+                            aria-label={isMaximized ? "Restore terminal" : "Maximize terminal"}
+                            title={isMaximized ? "Restore terminal" : "Maximize terminal"}
+                        />
+                    </div>
                 </div>
-                <span className={TERMINAL_STYLES.header.title}>
-                    terminal@cybernetic:~
-                </span>
+                <div className="flex items-center space-x-2">
+                    <div className="w-1 h-4 bg-[#00D9FF] animate-pulse" />
+                    <span className={`${TERMINAL_STYLES.header.title} tracking-wider`}>
+                        isha@system:~/portfolio$
+                    </span>
+                </div>
             </div>
         </div>
-        {/* Keyboard shortcuts info */}
-        <div className="hidden sm:flex items-center text-xs text-gray-400 font-mono">
-            <span>Alt+F10: Maximize • Esc: Close</span>
+        {/* System status indicators */}
+        <div className="hidden sm:flex items-center text-xs text-[#00D9FF]/60 font-mono space-x-4">
+            <span className="flex items-center space-x-1">
+                <div className="w-1 h-1 bg-green-400 rounded-full animate-pulse" />
+                <span>ACTIVE</span>
+            </span>
+            <span>ESC:EXIT</span>
         </div>
     </header>
 ));
@@ -174,7 +168,7 @@ const TerminalInput = memo(({
                     className={TERMINAL_STYLES.content.input.prompt}
                     aria-hidden="true"
                 >
-                    user@terminal:~$
+                    isha@system:~/portfolio$
                 </span>
                 <input
                     ref={inputRef}
@@ -215,6 +209,7 @@ TerminalInput.displayName = 'TerminalInput';
 
 const TerminalWindow = ({ isOpen, onClose, className, testId }: TerminalWindowProps) => {
     const [isLoading, setIsLoading] = useState(true);
+    const [isClosing, setIsClosing] = useState(false);
 
     const {
         state,
@@ -228,6 +223,22 @@ const TerminalWindow = ({ isOpen, onClose, className, testId }: TerminalWindowPr
     });
 
     // ============================================================================
+    // CYBERNETIC CLOSE HANDLER
+    // ============================================================================
+
+    const handleCyberneticClose = useCallback(() => {
+        if (isClosing) return; // Prevent multiple triggers
+
+        setIsClosing(true);
+
+        // Trigger cybernetic closing sequence
+        setTimeout(() => {
+            setIsClosing(false);
+            onClose();
+        }, 2000); // Extended for more enjoyable experience
+    }, [onClose, isClosing]);
+
+    // ============================================================================
     // VISIBILITY MANAGEMENT
     // ============================================================================
 
@@ -235,10 +246,10 @@ const TerminalWindow = ({ isOpen, onClose, className, testId }: TerminalWindowPr
         if (isOpen) {
             setIsLoading(true);
 
-            // Simulate loading time for smooth animation
+            // Extended loading time for more enjoyable opening animation
             const loadingTimer = setTimeout(() => {
                 setIsLoading(false);
-            }, 300);
+            }, 800);
 
             return () => clearTimeout(loadingTimer);
         } else {
@@ -265,6 +276,12 @@ const TerminalWindow = ({ isOpen, onClose, className, testId }: TerminalWindowPr
 
     useEffect(() => {
         const handleGlobalKeyDown = (e: KeyboardEvent) => {
+            // Escape to close
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                handleCyberneticClose();
+            }
+
             // Alt + F10 for maximize toggle
             if (e.altKey && e.key === 'F10') {
                 e.preventDefault();
@@ -283,7 +300,7 @@ const TerminalWindow = ({ isOpen, onClose, className, testId }: TerminalWindowPr
             return () => document.removeEventListener('keydown', handleGlobalKeyDown);
         }
         return undefined;
-    }, [isOpen, actions]);
+    }, [isOpen, actions, handleCyberneticClose]);
 
     // ============================================================================
     // ERROR HANDLING
@@ -298,14 +315,15 @@ const TerminalWindow = ({ isOpen, onClose, className, testId }: TerminalWindowPr
     // RENDER GUARDS
     // ============================================================================
 
-    if (!isOpen) return null;
+    // Keep terminal visible during opening OR closing animation
+    if (!isOpen && !isClosing) return null;
 
     return (
         <SimpleErrorBoundary onError={handleError}>
             <div
                 className={combineClasses(
                     TERMINAL_STYLES.overlay.base,
-                    isOpen ? TERMINAL_STYLES.overlay.open : TERMINAL_STYLES.overlay.closed,
+                    (isOpen && !isClosing) ? TERMINAL_STYLES.overlay.open : TERMINAL_STYLES.overlay.closed,
                     className
                 )}
                 role="dialog"
@@ -316,68 +334,46 @@ const TerminalWindow = ({ isOpen, onClose, className, testId }: TerminalWindowPr
                 <div
                     className={combineClasses(
                         TERMINAL_STYLES.window.base,
-                        isOpen ? TERMINAL_STYLES.window.open : TERMINAL_STYLES.window.closed,
+                        (isOpen && !isClosing) ? TERMINAL_STYLES.window.open : TERMINAL_STYLES.window.closed,
                         state.isMaximized
                             ? TERMINAL_STYLES.window.maximized
                             : TERMINAL_STYLES.window.normal,
+                        isClosing && "terminal-closing cybernetic-close digital-glitch",
+                        "backdrop-blur-xl bg-black/95"
                     )}
                 >
-                    {/* Cybernetic border effects - positioned behind content */}
+                    {/* Minimal cybernetic border effects */}
                     <div className="absolute inset-0 pointer-events-none z-0">
-                        <div
-                            className={combineClasses(
-                                TERMINAL_STYLES.decorations.cornerBorder,
-                                TERMINAL_STYLES.decorations.topLeft,
-                            )}
-                        />
-                        <div
-                            className={combineClasses(
-                                TERMINAL_STYLES.decorations.cornerBorder,
-                                TERMINAL_STYLES.decorations.topRight,
-                            )}
-                        />
-                        <div
-                            className={combineClasses(
-                                TERMINAL_STYLES.decorations.cornerBorder,
-                                TERMINAL_STYLES.decorations.bottomLeft,
-                            )}
-                        />
-                        <div
-                            className={combineClasses(
-                                TERMINAL_STYLES.decorations.cornerBorder,
-                                TERMINAL_STYLES.decorations.bottomRight,
-                            )}
-                        />
+                        {/* Corner accent lines */}
+                        <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-[#00D9FF]/40" />
+                        <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-[#00D9FF]/40" />
+                        <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-[#00D9FF]/40" />
+                        <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-[#00D9FF]/40" />
+
+                        {/* Subtle glow effect */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-[#00D9FF]/5 via-transparent to-[#00D9FF]/5 animate-pulse" />
                     </div>
 
-                    {/* Scanning line animation - positioned behind content */}
+                    {/* Minimal scanning animation */}
                     <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-                        <div className={TERMINAL_STYLES.decorations.scanLine.line} />
-                        {/* Multiple scanning lines with different speeds and opacities */}
-                        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#00D9FF]/15 to-transparent animate-scan absolute" style={{ animationDelay: '1s' }} />
-                        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#00D9FF]/10 to-transparent animate-scanFast absolute" style={{ animationDelay: '0.5s' }} />
-                        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#00D9FF]/20 to-transparent animate-scanSlow absolute" style={{ animationDelay: '3s' }} />
-                        {/* Subtle background flicker effect */}
-                        <div className="absolute inset-0 bg-[#00D9FF]/2 animate-flicker" />
+                        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#00D9FF]/20 to-transparent animate-scan absolute" />
+                        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#00D9FF]/10 to-transparent animate-scan absolute" style={{ animationDelay: '2s' }} />
                     </div>
 
 
-                    {/* Terminal Header - positioned above decorations */}
-                    <div className="relative z-10 flex-shrink-0">
-                        <TerminalHeader
-                            isMaximized={state.isMaximized}
-                            onToggleMaximize={actions.toggleMaximize}
-                            onClose={onClose}
-                        />
-                    </div>
 
-                    {/* Terminal Content - positioned above decorations */}
+                    {/* Header */}
+                    <TerminalHeader
+                        isMaximized={state.isMaximized}
+                        onToggleMaximize={actions.toggleMaximize}
+                        onClose={handleCyberneticClose}
+                    />
+
+                    {/* Terminal Content */}
                     <main className={combineClasses(TERMINAL_STYLES.content.container, "relative z-10 flex-1 min-h-0")}>
-                        {/* Additional scanning effects over content area */}
+                        {/* Minimal content area effects */}
                         <div className="absolute inset-0 overflow-hidden pointer-events-none z-5">
-                            <div className="w-full h-px bg-gradient-to-r from-transparent via-[#00D9FF]/8 to-transparent animate-scan absolute" style={{ animationDelay: '2s' }} />
-                            <div className="w-full h-px bg-gradient-to-r from-transparent via-[#00D9FF]/5 to-transparent animate-scanFast absolute" style={{ animationDelay: '1.5s' }} />
-                            <div className="w-full h-px bg-gradient-to-r from-transparent via-[#00D9FF]/10 to-transparent animate-scanSlow absolute" style={{ animationDelay: '6s' }} />
+                            <div className="w-full h-px bg-gradient-to-r from-transparent via-[#00D9FF]/5 to-transparent animate-scan absolute" style={{ animationDelay: '4s' }} />
                         </div>
 
                         {/* Output Area */}
@@ -395,21 +391,27 @@ const TerminalWindow = ({ isOpen, onClose, className, testId }: TerminalWindowPr
                             disabled={false}
                         />
 
-                        {/* Loading Overlay - Only covers main content */}
+                        {/* Cybernetic loading overlay */}
                         {isLoading && (
-                            <div className="absolute inset-0 flex items-center justify-center bg-black/80 z-20 pointer-events-none">
-                                <div className="text-[#00D9FF] font-mono">
-                                    <div className="animate-pulse">Initializing terminal...</div>
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/90 z-20 pointer-events-none">
+                                <div className="text-[#00D9FF] font-mono text-center space-y-2">
+                                    <div className="flex items-center justify-center space-x-2">
+                                        <div className="w-2 h-2 bg-[#00D9FF] animate-bounce" style={{ animationDelay: '0ms' }} />
+                                        <div className="w-2 h-2 bg-[#00D9FF] animate-bounce" style={{ animationDelay: '100ms' }} />
+                                        <div className="w-2 h-2 bg-[#00D9FF] animate-bounce" style={{ animationDelay: '200ms' }} />
+                                    </div>
+                                    <div className="animate-pulse">SYSTEM INITIALIZATION</div>
                                 </div>
                             </div>
                         )}
                     </main>
 
-                    {/* Status Bar (Optional) */}
+                    {/* Minimal status bar */}
                     {import.meta.env.DEV && (
-                        <div className="px-4 py-1 text-xs text-gray-500 border-t border-[#00D9FF]/20 bg-gray-900/50">
-                            Lines: {state.lines.length} | History: {state.commandHistory.length} |
-                            {state.isMaximized ? ' Maximized' : ' Normal'}
+                        <div className="px-4 py-2 text-xs text-[#00D9FF]/40 border-t border-[#00D9FF]/10 bg-black/30 font-mono flex justify-between">
+                            <span>LINES:{state.lines.length}</span>
+                            <span>HIST:{state.commandHistory.length}</span>
+                            <span>{state.isMaximized ? 'MAX' : 'WIN'}</span>
                         </div>
                     )}
                 </div>
