@@ -50,6 +50,7 @@ const config: Config = {
         scanSlow: 'scanSlow 12s linear infinite',
         scanFast: 'scanFast 2s linear infinite',
         flicker: 'flicker 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite',
+        'fade-in-out': 'fade-in-out 1.2s ease-out forwards',
       },
       keyframes: {
         fadeIn: {
@@ -108,7 +109,12 @@ const config: Config = {
             transform: 'scale(1)',
             opacity: '1'
           }
-        }
+        },
+        'fade-in-out': {
+          '0%': { opacity: '0' },
+          '50%': { opacity: '1' },
+          '100%': { opacity: '0.7' },
+        },
       },
     },
   },

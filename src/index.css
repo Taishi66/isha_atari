@@ -534,3 +534,61 @@ body {
     box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
     transform: translateY(-2px);
 }
+
+/* Cybernetic loader animations */
+
+@keyframes scanRight {
+    0% {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+@keyframes progressGlow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(0, 217, 255, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(0, 217, 255, 0.8);
+    }
+}
+
+@keyframes textGlow {
+    0%, 100% {
+        text-shadow: 0 0 5px rgba(0, 217, 255, 0.5);
+    }
+    50% {
+        text-shadow: 0 0 15px rgba(0, 217, 255, 1);
+    }
+}
+
+@keyframes pulseRing {
+    0% {
+        transform: scale(0.8);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.4);
+        opacity: 0;
+    }
+}
+
+.progress-glow {
+    animation: progressGlow 2s ease-in-out infinite;
+}
+
+.text-glow {
+    animation: textGlow 3s ease-in-out infinite;
+}
+
+.pulse-ring {
+    animation: pulseRing 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+}
+

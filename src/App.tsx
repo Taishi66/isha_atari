@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import {
     Header,
     Footer,
@@ -7,18 +7,24 @@ import {
     ContactSection,
     FloatingCursor,
     TerminalWindow,
+    CyberneticLoader,
     ErrorBoundary,
 } from "@/components";
 import { useGlitchEffect } from "@/hooks";
 
 function App() {
-    const { glitchText } = useGlitchEffect({ text: "JC LAMY" });
+    const { glitchText } = useGlitchEffect({ text: "ISHA ATARI" });
     const [currentTime, setCurrentTime] = useState<Date>(new Date());
     const [isTerminalOpen, setIsTerminalOpen] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    const handleTerminalToggle = () => {
-        setIsTerminalOpen(!isTerminalOpen);
-    };
+    const handleTerminalToggle = useCallback(() => {
+        setIsTerminalOpen((prev) => !prev);
+    }, []);
+
+    const handleLoadingComplete = useCallback(() => {
+        setIsLoading(false);
+    }, []);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -30,7 +36,19 @@ function App() {
 
     return (
         <ErrorBoundary>
-            <div className="min-h-screen bg-black text-white overflow-hidden relative">
+            {/* Cybernetic Loader */}
+            {isLoading && (
+                <CyberneticLoader
+                    onComplete={handleLoadingComplete}
+                    duration={4500} // 4.5 seconds for enjoyable experience
+                />
+            )}
+
+            {/* Main Application */}
+            <div className={`min-h-screen bg-black text-white overflow-hidden relative transition-all duration-1000 ease-out ${isLoading
+                    ? 'opacity-0 scale-105 blur-sm'
+                    : 'opacity-100 scale-100 blur-0'
+                }`}>
                 {/* Cybernetic Grid Background */}
                 <div className="fixed inset-0 opacity-5">
                     <div className="absolute inset-0 cybergrid-color"></div>
