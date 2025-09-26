@@ -30,6 +30,8 @@ function App() {
 
     const handleLoadingComplete = useCallback(() => {
         setIsLoading(false);
+        // Scroll to top when loading is complete
+        window.scrollTo(0, 0);
     }, []);
 
     useEffect(() => {
@@ -40,8 +42,47 @@ function App() {
         return () => clearInterval(timer);
     }, []);
 
+    // Prevent scrolling during loading
+    useEffect(() => {
+        if (isLoading) {
+            // Save current scroll position
+            const scrollY = window.scrollY;
+
+            // Prevent scrolling by setting overflow hidden on body
+            document.body.style.overflow = 'hidden';
+            document.body.style.position = 'fixed';
+            document.body.style.width = '100%';
+            document.body.style.top = `-${scrollY}px`;
+        } else {
+            // Restore scrolling
+            const scrollY = document.body.style.top;
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.width = '';
+            document.body.style.top = '';
+
+            // Restore scroll position briefly, then scroll to top
+            if (scrollY) {
+                window.scrollTo(0, parseInt(scrollY.replace('px', '')) * -1);
+            }
+            // Immediately scroll to top
+            setTimeout(() => window.scrollTo(0, 0), 0);
+        }
+
+        // Cleanup on unmount
+        return () => {
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.width = '';
+            document.body.style.top = '';
+        };
+    }, [isLoading]);
+
     return (
         <ErrorBoundary>
+            {/* Global FloatingCursor - outside overflow container */}
+            <FloatingCursor />
+
             {/* Cybernetic Loader */}
             {isLoading && (
                 <CyberneticLoader
@@ -59,7 +100,6 @@ function App() {
                 <div className="fixed inset-0 opacity-5">
                     <div className="absolute inset-0 cybergrid-color"></div>
                 </div>
-                <FloatingCursor />
 
                 <main className="relative z-10">
                     <Header

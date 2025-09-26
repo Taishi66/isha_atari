@@ -1,30 +1,48 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 const FloatingCursor = () => {
-  const [mousePosition, setMousePosition] = useState<{ x: number; y: number }>({
+  const [cursorPosition, setCursorPosition] = useState<{ x: number; y: number }>({
     x: 0,
     y: 0,
   });
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
+  const updateCursorPosition = useCallback((e: MouseEvent) => {
+    // Convert page coordinates to viewport coordinates for fixed positioning
+    const x = e.clientX;
+    const y = e.clientY;
 
-    window.addEventListener("mousemove", handleMouseMove);
+    setCursorPosition({ x, y });
+  }, []);
+
+  useEffect(() => {
+    // Use mousemove on document for better coverage
+    document.addEventListener("mousemove", updateCursorPosition);
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mousemove", updateCursorPosition);
     };
-  }, []);
+  }, [updateCursorPosition]);
+
   return (
     <div
-      className="fixed pointer-events-none z-50 w-96 h-96 rounded-full opacity-20 blur-3xl bg-cyan-400"
+      className="fixed pointer-events-none z-50 w-32 h-32 -translate-x-1/2 -translate-y-1/2"
       style={{
-        left: mousePosition.x - 192,
-        top: mousePosition.y - 192,
+        left: cursorPosition.x,
+        top: cursorPosition.y,
+        transition: 'all 0.1s ease-out',
       }}
-    ></div>
+    >
+      {/* Minimal cybernetic glow */}
+      <div className="absolute inset-0 rounded-full bg-cyan-400/15 blur-xl animate-pulse" />
+
+      {/* Precise center dot */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="w-1 h-1 rounded-full bg-cyan-300 opacity-60" />
+      </div>
+
+      {/* Subtle ring indicator */}
+      <div className="absolute inset-4 rounded-full border border-cyan-400/20 opacity-40" />
+    </div>
   );
 };
 
