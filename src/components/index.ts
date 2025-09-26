@@ -14,6 +14,7 @@ export { default as ContactSection } from "./sections/ContactSection";
 // UI components
 export { default as FloatingCursor } from "./ui/FloatingCursor";
 export { default as CyberneticLoader } from "./ui/CyberneticLoader";
+export { default as ThemeManager } from "./ui/ThemeManager";
 
 // Common components
 export { ErrorBoundary } from "./common/ErrorBoundary";

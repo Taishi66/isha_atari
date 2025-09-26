@@ -8,6 +8,7 @@ import {
     FloatingCursor,
     TerminalWindow,
     CyberneticLoader,
+    ThemeManager,
     ErrorBoundary,
 } from "@/components";
 import { useGlitchEffect } from "@/hooks";
@@ -82,6 +83,9 @@ function App() {
         <ErrorBoundary>
             {/* Global FloatingCursor - outside overflow container */}
             <FloatingCursor />
+
+            {/* Global ThemeManager - floating bottom right */}
+            <ThemeManager />
 
             {/* Cybernetic Loader */}
             {isLoading && (
