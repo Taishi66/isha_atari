@@ -4,6 +4,7 @@
  */
 
 import { useEffect, useState, memo, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { useTerminal } from "@/hooks/useTerminal";
 import { getLineClassName } from "@/utils/terminalCommands";
 import { TERMINAL_STYLES, combineClasses } from "@/utils/terminalStyles";
@@ -184,7 +185,7 @@ const TerminalInput = memo(({
     const { colors } = useTheme();
     const handleContainerClick = useCallback(() => {
         if (!disabled && inputRef.current) {
-            inputRef.current.focus();
+            inputRef.current.focus({ preventScroll: true });
         }
     }, [disabled, inputRef]);
 
@@ -286,6 +287,9 @@ const TerminalWindow = ({ isOpen, onClose, className, testId }: TerminalWindowPr
         if (isOpen) {
             setIsLoading(true);
 
+            // Disable page scroll when terminal is open
+            document.body.style.overflow = 'hidden';
+
             // Extended loading time for more enjoyable opening animation
             const loadingTimer = setTimeout(() => {
                 setIsLoading(false);
@@ -294,16 +298,19 @@ const TerminalWindow = ({ isOpen, onClose, className, testId }: TerminalWindowPr
             return () => clearTimeout(loadingTimer);
         } else {
             setIsLoading(false);
+
+            // Re-enable page scroll when terminal is closed
+            document.body.style.overflow = '';
         }
         return;
     }, [isOpen]);
 
-    // Focus input after loading completes
+    // Focus input after loading completes (without scrolling)
     useEffect(() => {
         if (!isLoading && isOpen && refs.inputRef.current) {
             const focusTimer = setTimeout(() => {
-                refs.inputRef.current?.focus();
-                refs.inputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                // Focus without triggering scroll
+                refs.inputRef.current?.focus({ preventScroll: true });
             }, 100);
             return () => clearTimeout(focusTimer);
         }
@@ -358,12 +365,13 @@ const TerminalWindow = ({ isOpen, onClose, className, testId }: TerminalWindowPr
     // Keep terminal visible during opening OR closing animation
     if (!isOpen && !isClosing) return null;
 
-    return (
+    const terminalContent = (
         <SimpleErrorBoundary onError={handleError}>
             <div
                 className={combineClasses(
                     TERMINAL_STYLES.overlay.base,
                     (isOpen && !isClosing) ? TERMINAL_STYLES.overlay.open : TERMINAL_STYLES.overlay.closed,
+                    state.isMaximized ? TERMINAL_STYLES.overlay.maximized : TERMINAL_STYLES.overlay.normal,
                     className
                 )}
                 role="dialog"
@@ -468,6 +476,9 @@ const TerminalWindow = ({ isOpen, onClose, className, testId }: TerminalWindowPr
             </div>
         </SimpleErrorBoundary>
     );
+
+    // Render through Portal to escape parent container constraints
+    return createPortal(terminalContent, document.body);
 };
 
 TerminalWindow.displayName = 'TerminalWindow';

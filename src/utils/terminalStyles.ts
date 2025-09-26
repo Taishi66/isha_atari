@@ -1,8 +1,10 @@
 export const TERMINAL_STYLES = {
   overlay: {
-    base: "fixed inset-0 z-50 flex items-center justify-center p-4 transition-all duration-700 ease-out",
+    base: "fixed inset-0 z-50 transition-all duration-700 ease-out",
     open: "opacity-100 backdrop-blur-sm bg-black/50",
     closed: "opacity-0 pointer-events-none",
+    normal: "flex items-center justify-center p-4",
+    maximized: "p-0",
   },
 
   window: {
@@ -16,7 +18,7 @@ export const TERMINAL_STYLES = {
     normal: `w-4/5 max-w-4xl h-3/4 max-h-[600px] min-h-[400px] rounded-lg
              transition-all duration-800 cubic-bezier(0.16, 1, 0.3, 1)
              hover:shadow-[0_0_30px_rgba(0,217,255,0.3)]`,
-    maximized: `w-full h-full max-h-screen rounded-none
+    maximized: `w-screen h-screen max-w-none max-h-none min-h-screen rounded-none
                 transition-all duration-800 cubic-bezier(0.16, 1, 0.3, 1)
                 shadow-[0_0_50px_rgba(0,217,255,0.4)]`,
   },
