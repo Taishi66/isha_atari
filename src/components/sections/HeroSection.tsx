@@ -34,9 +34,9 @@ const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
             {/* System Status Bar */}
             <div className="absolute top-24 left-8 right-8">
                 <div className="max-w-7xl mx-auto">
-                    <div className="flex items-center justify-between text-xs font-mono text-cyan-400/60">
+                    <div className="flex items-center justify-between text-xs font-mono" style={{ color: 'var(--theme-text-muted)' }}>
                         <div className="flex items-center space-x-4">
-                            <div className="w-1 h-1 bg-green-400 rounded-full animate-pulse" />
+                            <div className="w-1 h-1 rounded-full animate-pulse" style={{ backgroundColor: 'var(--theme-success)' }} />
                             <span>SYSTEM_ACTIVE</span>
                         </div>
                         <div className="flex items-center space-x-6">
@@ -56,8 +56,8 @@ const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
                         {/* Header Matrix */}
                         <div className="mb-12">
                             <div className="flex items-center space-x-4 mb-3">
-                                <div className="w-2 h-2 border border-cyan-400/60 rotate-45 animate-pulse" />
-                                <div className="text-xs font-mono text-cyan-400/70 tracking-[0.2em]">
+                                <div className="w-2 h-2 border rotate-45 animate-pulse" style={{ borderColor: 'var(--theme-border-secondary)' }} />
+                                <div className="text-xs font-mono tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
                                     {HERO_TOP_TITLE}
                                 </div>
                             </div>
@@ -70,8 +70,8 @@ const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
                                     </span>
                                 </h1>
                                 <div className="flex items-center space-x-4">
-                                    <div className="h-px w-16 bg-gradient-to-r from-cyan-400 to-transparent" />
-                                    <p className="text-lg font-mono font-light text-cyan-300/80">
+                                    <div className="h-px w-16 bg-gradient-to-r to-transparent" style={{ backgroundImage: `linear-gradient(to right, var(--theme-primary), transparent)` }} />
+                                    <p className="text-lg font-mono font-light" style={{ color: 'var(--theme-accent)' }}>
                                         {HERO_JOB_TITLE}
                                     </p>
                                 </div>
@@ -79,15 +79,15 @@ const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
                         </div>
 
                         {/* Description Panel */}
-                        <div className="relative bg-black/30 border border-cyan-500/20 p-6 mb-8 group hover:border-cyan-400/30 transition-all duration-300">
+                        <div className="relative bg-black/30 border p-6 mb-8 group transition-all duration-300" style={{ borderColor: 'var(--theme-border-primary)' }} onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--theme-border-secondary)'} onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--theme-border-primary)'}>
                             {/* Corner indicators */}
-                            <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-cyan-400/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                            <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-cyan-400/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            <div className="absolute top-2 left-2 w-2 h-2 border-t border-l opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ borderColor: 'var(--theme-border-active)' }} />
+                            <div className="absolute top-2 right-2 w-2 h-2 border-t border-r opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ borderColor: 'var(--theme-border-active)' }} />
 
                             <div className="space-y-4">
                                 <div className="flex items-center justify-between">
-                                    <div className="text-xs font-mono text-cyan-400/60">DESCRIPTION_INTERFACE</div>
-                                    <div className="w-1 h-1 bg-cyan-400 rounded-full animate-pulse" />
+                                    <div className="text-xs font-mono" style={{ color: 'var(--theme-text-muted)' }}>DESCRIPTION_INTERFACE</div>
+                                    <div className="w-1 h-1 rounded-full animate-pulse" style={{ backgroundColor: 'var(--theme-primary)' }} />
                                 </div>
                                 <p className="text-sm text-gray-400/90 leading-relaxed font-light">
                                     {HERO_DESC}
@@ -98,8 +98,8 @@ const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
                         {/* Technology Stack Matrix */}
                         <div className="space-y-6">
                             <div className="flex items-center space-x-4">
-                                <div className="w-1 h-1 bg-cyan-400 rounded-full" />
-                                <div className="text-xs font-mono text-cyan-400/70 tracking-[0.2em]">
+                                <div className="w-1 h-1 rounded-full" style={{ backgroundColor: 'var(--theme-primary)' }} />
+                                <div className="text-xs font-mono tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
                                     CORE_TECHNOLOGIES
                                 </div>
                             </div>
@@ -108,16 +108,16 @@ const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
                                 {CORE_TECH.map((tech, index) => (
                                     <div
                                         key={tech}
-                                        className="relative bg-black/40 border border-cyan-500/20 hover:border-cyan-400/60 hover:bg-cyan-400/5 transition-all duration-300 p-3 cursor-pointer group"
+                                        className="relative bg-black/40 border p-3 cursor-pointer group transition-all duration-300" style={{ borderColor: 'var(--theme-border-primary)' }} onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--theme-border-secondary)'; e.currentTarget.style.backgroundColor = 'var(--theme-bg-active)'; }} onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--theme-border-primary)'; e.currentTarget.style.backgroundColor = 'transparent'; }}
                                     >
                                         {/* Hover-triggered active indicator */}
-                                        <div className="absolute top-1 right-1 w-1 h-1 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-300" />
+                                        <div className="absolute top-1 right-1 w-1 h-1 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-300" style={{ backgroundColor: 'var(--theme-primary)' }} />
 
                                         <div className="flex items-center justify-between">
-                                            <span className="text-xs font-mono text-white/90 group-hover:text-cyan-300 transition-colors duration-300">
+                                            <span className="text-xs font-mono text-white/90 transition-colors duration-300" onMouseEnter={(e) => e.currentTarget.style.color = 'var(--theme-accent)'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.9)'}>
                                                 {tech}
                                             </span>
-                                            <span className="text-xs font-mono text-cyan-400/50">
+                                            <span className="text-xs font-mono" style={{ color: 'var(--theme-text-muted)' }}>
                                                 {String(index + 1).padStart(2, '0')}
                                             </span>
                                         </div>
@@ -132,28 +132,28 @@ const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
                         <div className="space-y-6">
                             {/* Terminal Access Panel */}
                             <div
-                                className="relative bg-black/40 border border-cyan-500/20 hover:border-cyan-400/40 transition-all duration-300 p-6 cursor-pointer group"
+                                className="relative bg-black/40 border p-6 cursor-pointer group transition-all duration-300" style={{ borderColor: 'var(--theme-border-primary)' }} onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--theme-border-secondary)'} onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--theme-border-primary)'}
                                 onClick={onTerminalClick}
                             >
                                 {/* Corner indicators */}
-                                <div className="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-cyan-400/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                                <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-cyan-400/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                <div className="absolute bottom-2 left-2 w-2 h-2 border-b border-l opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ borderColor: 'var(--theme-border-active)' }} />
+                                <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ borderColor: 'var(--theme-border-active)' }} />
 
                                 <div className="space-y-4">
                                     <div className="flex items-center justify-between">
-                                        <div className="text-xs font-mono text-cyan-400/60">{CUBE_TITLE}</div>
+                                        <div className="text-xs font-mono" style={{ color: 'var(--theme-text-muted)' }}>{CUBE_TITLE}</div>
                                         <div className="flex items-center space-x-2">
-                                            <div className="w-1 h-1 bg-green-400 rounded-full animate-pulse" />
-                                            <span className="text-xs font-mono text-green-400/80">READY</span>
+                                            <div className="w-1 h-1 rounded-full animate-pulse" style={{ backgroundColor: 'var(--theme-success)' }} />
+                                            <span className="text-xs font-mono" style={{ color: 'var(--theme-success)' }}>READY</span>
                                         </div>
                                     </div>
 
                                     <div className="flex items-center space-x-4">
-                                        <div className="p-3 border border-cyan-500/30 group-hover:border-cyan-400/60 transition-all duration-300">
-                                            <Terminal size={24} className="text-cyan-400/80" />
+                                        <div className="p-3 border transition-all duration-300" style={{ borderColor: 'var(--theme-border-primary)' }} onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--theme-border-secondary)'} onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--theme-border-primary)'}>
+                                            <Terminal size={24} style={{ color: 'var(--theme-primary)' }} />
                                         </div>
                                         <div className="space-y-1">
-                                            <p className="font-mono text-sm text-white/90 group-hover:text-cyan-300 transition-colors duration-300">
+                                            <p className="font-mono text-sm text-white/90 transition-colors duration-300" onMouseEnter={(e) => e.currentTarget.style.color = 'var(--theme-accent)'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.9)'}>
                                                 ACCESS_TERMINAL
                                             </p>
                                             <p className="text-xs text-gray-400/80">
@@ -163,43 +163,45 @@ const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
                                     </div>
 
                                     <div className="flex items-center space-x-3 pt-2">
-                                        <Play size={12} className="text-cyan-400/60" />
-                                        <span className="text-xs font-mono text-cyan-400/60">CLICK_TO_INITIALIZE</span>
+                                        <Play size={12} style={{ color: 'var(--theme-text-muted)' }} />
+                                        <span className="text-xs font-mono" style={{ color: 'var(--theme-text-muted)' }}>CLICK_TO_INITIALIZE</span>
                                     </div>
                                 </div>
 
                                 {/* Hover scan effect */}
                                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                                    <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent" />
+                                    <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent to-transparent" style={{ backgroundImage: `linear-gradient(to right, transparent, var(--theme-primary), transparent)` }} />
                                 </div>
                             </div>
 
                             {/* System Status Modules */}
                             <div className="space-y-3">
-                                <div className="text-xs font-mono text-cyan-400/60 tracking-[0.2em]">
+                                <div className="text-xs font-mono tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
                                     SYSTEM_MODULES
                                 </div>
 
                                 {['COMPONENT_SYSTEM', 'UI_RENDERER', 'STATE_MANAGER'].map((module, index) => (
                                     <div
                                         key={module}
-                                        className={`relative bg-black/30 border p-3 transition-all duration-300 ${
-                                            activeModule === index
-                                                ? 'border-cyan-400/60 bg-cyan-400/5'
-                                                : 'border-cyan-500/20'
-                                        }`}
+                                        className="relative bg-black/30 border p-3 transition-all duration-300"
+                                        style={{
+                                            borderColor: activeModule === index ? 'var(--theme-border-secondary)' : 'var(--theme-border-primary)',
+                                            backgroundColor: activeModule === index ? 'var(--theme-bg-active)' : 'transparent'
+                                        }}
                                     >
                                         <div className="flex items-center justify-between">
                                             <span className="text-xs font-mono text-white/80">
                                                 {module}
                                             </span>
                                             <div className="flex items-center space-x-2">
-                                                <div className={`w-1 h-1 rounded-full ${
-                                                    activeModule === index ? 'bg-green-400 animate-pulse' : 'bg-gray-500'
-                                                }`} />
-                                                <span className={`text-xs font-mono ${
-                                                    activeModule === index ? 'text-green-400' : 'text-gray-500'
-                                                }`}>
+                                                <div
+                                                    className={`w-1 h-1 rounded-full ${activeModule === index ? 'animate-pulse' : ''}`}
+                                                    style={{ backgroundColor: activeModule === index ? 'var(--theme-success)' : '#6B7280' }}
+                                                />
+                                                <span
+                                                    className="text-xs font-mono"
+                                                    style={{ color: activeModule === index ? 'var(--theme-success)' : '#6B7280' }}
+                                                >
                                                     {activeModule === index ? 'ACTIVE' : 'STANDBY'}
                                                 </span>
                                             </div>

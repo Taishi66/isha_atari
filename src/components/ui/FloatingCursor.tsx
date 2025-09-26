@@ -33,15 +33,15 @@ const FloatingCursor = () => {
       }}
     >
       {/* Minimal cybernetic glow - only visible, no automatic animation */}
-      <div className="absolute inset-0 rounded-full bg-cyan-400/10 blur-xl" />
+      <div className="absolute inset-0 rounded-full blur-xl" style={{ backgroundColor: 'var(--theme-bg-active)' }} />
 
       {/* Precise center dot */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="w-1 h-1 rounded-full bg-cyan-300 opacity-60" />
+        <div className="w-1 h-1 rounded-full opacity-60" style={{ backgroundColor: 'var(--theme-accent)' }} />
       </div>
 
       {/* Subtle ring indicator */}
-      <div className="absolute inset-4 rounded-full border border-cyan-400/20 opacity-40" />
+      <div className="absolute inset-4 rounded-full border opacity-40" style={{ borderColor: 'var(--theme-border-primary)' }} />
     </div>
   );
 };

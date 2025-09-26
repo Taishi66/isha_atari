@@ -8,3 +8,130 @@ body {
         linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
     background-size: "50px 50px";
 }
+
+/* Terminal Theme Override Styles */
+/* NUCLEAR OPTION: Override ALL cyan colors in terminal with maximum specificity */
+
+/* Target the terminal window specifically */
+[role="dialog"][aria-modal="true"][aria-label="Terminal Window"] {
+    --terminal-override: var(--terminal-primary);
+}
+
+/* Force ALL text in terminal to use theme colors - MAXIMUM SPECIFICITY */
+[role="dialog"][aria-modal="true"] div[role="log"] > div > div,
+[role="dialog"][aria-modal="true"] div[role="log"] div,
+[role="dialog"][aria-modal="true"] div[role="log"] span,
+[role="dialog"][aria-modal="true"] .font-mono {
+    color: var(--terminal-primary) !important;
+}
+
+/* Override ALL possible cyan color variations with brute force */
+[role="dialog"][aria-modal="true"] * {
+    /* Target any element with cyan in the color */
+}
+
+[role="dialog"][aria-modal="true"] *[style*="#00D9FF"],
+[role="dialog"][aria-modal="true"] *[style*="rgb(0, 217, 255)"],
+[role="dialog"][aria-modal="true"] *[style*="rgba(0, 217, 255"] {
+    color: var(--terminal-primary) !important;
+}
+
+/* Override hardcoded Tailwind classes - ALL variations */
+[role="dialog"][aria-modal="true"] .text-\[\#00D9FF\],
+[role="dialog"][aria-modal="true"] .text-\[\#00d9ff\],
+[role="dialog"][aria-modal="true"] [class*="text-[#00D9FF]"],
+[role="dialog"][aria-modal="true"] [class*="text-[#00d9ff]"],
+[role="dialog"][aria-modal="true"] [class*="text-cyan"] {
+    color: var(--terminal-primary) !important;
+}
+
+/* Override border colors */
+[role="dialog"][aria-modal="true"] [class*="border-[#00D9FF]"],
+[role="dialog"][aria-modal="true"] [class*="border-cyan"] {
+    border-color: var(--terminal-border-active) !important;
+}
+
+/* Override background colors */
+[role="dialog"][aria-modal="true"] [class*="bg-[#00D9FF]"],
+[role="dialog"][aria-modal="true"] [class*="bg-cyan"] {
+    background-color: var(--terminal-primary) !important;
+}
+
+/* Force terminal input/output specifically */
+[role="dialog"][aria-modal="true"] input {
+    color: #FFFFFF !important;
+}
+
+/* Override ANY computed styles that might be cyan */
+[role="dialog"][aria-modal="true"] * {
+    /* This rule uses CSS custom properties to override any cyan colors */
+}
+
+/* Very specific targeting for terminal content */
+[role="dialog"][aria-modal="true"] main > div[role="log"] * {
+    color: var(--terminal-primary) !important;
+}
+
+/* Target terminal output lines directly */
+[role="dialog"][aria-modal="true"] [class*="animate-in"] {
+    color: var(--terminal-primary) !important;
+}
+
+/* Target any remaining system text */
+[role="dialog"][aria-modal="true"] [class*="font-bold"],
+[role="dialog"][aria-modal="true"] [class*="font-medium"] {
+    color: var(--terminal-primary) !important;
+}
+
+/* Force re-evaluation of all colors on theme change */
+[role="dialog"][aria-modal="true"] {
+    /* Ensure CSS custom properties cascade properly */
+    color-scheme: dark;
+}
+
+/* Terminal header specific elements */
+[role="dialog"][aria-modal="true"] header {
+    border-color: var(--terminal-border-primary) !important;
+}
+
+[role="dialog"][aria-modal="true"] header * {
+    /* Force header elements to use theme colors */
+}
+
+[role="dialog"][aria-modal="true"] header [class*="text-"] {
+    color: var(--terminal-primary) !important;
+}
+
+/* Terminal content area */
+[role="dialog"][aria-modal="true"] main {
+    /* Ensure main content area uses theme colors */
+}
+
+[role="dialog"][aria-modal="true"] main [class*="border-"] {
+    border-color: var(--terminal-border-primary) !important;
+}
+
+/* Status bar at bottom */
+[role="dialog"][aria-modal="true"] div:last-child {
+    border-color: var(--terminal-border-primary) !important;
+    color: var(--terminal-primary) !important;
+}
+
+/* Override any remaining hardcoded colors with more specificity */
+[role="dialog"][aria-modal="true"] * {
+    /* Use CSS custom properties for dynamic color updates */
+}
+
+[role="dialog"][aria-modal="true"] *:not(input):not(button) {
+    /* Force all non-input elements to potentially use theme colors */
+}
+
+/* Ensure gradients update with theme */
+[role="dialog"][aria-modal="true"] [class*="gradient"] {
+    background-image: none !important;
+}
+
+[role="dialog"][aria-modal="true"] [style*="gradient"] {
+    /* Force gradient re-evaluation */
+    background-attachment: scroll !important;
+}
