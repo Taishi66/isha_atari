@@ -15,10 +15,10 @@ import { useGlitchEffect } from "@/hooks";
 function App() {
     const { glitchText } = useGlitchEffect({
         text: "ISHA ATARI",
-        interval: 3500, // Average 3.5 seconds
-        randomnessFactor: 0.43, // For a range of approx 2s to 5s
-        glitchDuration: 50, // Shorter, snappier glitch
-        intensity: 0.15, // Slightly more aggressive digital noise
+        interval: 4000, // Base interval of 4 seconds
+        randomnessFactor: 0.25, // Small randomness factor for tight control
+        glitchDuration: 80, // Slightly longer but still snappy
+        intensity: 0.12, // Reduced intensity for subtler effect
     });
     const [currentTime, setCurrentTime] = useState<Date>(new Date());
     const [isTerminalOpen, setIsTerminalOpen] = useState<boolean>(false);

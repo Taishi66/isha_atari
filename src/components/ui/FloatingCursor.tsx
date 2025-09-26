@@ -32,8 +32,8 @@ const FloatingCursor = () => {
         transition: 'all 0.1s ease-out',
       }}
     >
-      {/* Minimal cybernetic glow */}
-      <div className="absolute inset-0 rounded-full bg-cyan-400/15 blur-xl animate-pulse" />
+      {/* Minimal cybernetic glow - only visible, no automatic animation */}
+      <div className="absolute inset-0 rounded-full bg-cyan-400/10 blur-xl" />
 
       {/* Precise center dot */}
       <div className="absolute inset-0 flex items-center justify-center">
