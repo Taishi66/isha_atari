@@ -249,6 +249,7 @@ TerminalInput.displayName = 'TerminalInput';
 const TerminalWindow = ({ isOpen, onClose, className, testId }: TerminalWindowProps) => {
     const [isLoading, setIsLoading] = useState(true);
     const [isClosing, setIsClosing] = useState(false);
+    const [loadingProgress, setLoadingProgress] = useState(0);
     const { colors } = useTheme();
 
     const {
@@ -303,6 +304,33 @@ const TerminalWindow = ({ isOpen, onClose, className, testId }: TerminalWindowPr
         }
         return;
     }, [isOpen]);
+
+    useEffect(() => {
+        let frameId: number | undefined;
+        if (isLoading) {
+            setLoadingProgress(0);
+            const start = performance.now();
+            const duration = 900;
+
+            const animate = (now: number) => {
+                const progress = Math.min(100, ((now - start) / duration) * 100);
+                setLoadingProgress(progress);
+                if (progress < 100) {
+                    frameId = requestAnimationFrame(animate);
+                }
+            };
+
+            frameId = requestAnimationFrame(animate);
+        } else {
+            setLoadingProgress(100);
+        }
+
+        return () => {
+            if (frameId) {
+                cancelAnimationFrame(frameId);
+            }
+        };
+    }, [isLoading]);
 
     // Focus input after loading completes (without scrolling)
     useEffect(() => {
@@ -423,31 +451,45 @@ const TerminalWindow = ({ isOpen, onClose, className, testId }: TerminalWindowPr
                         {/* Minimal content area effects */}
 
 
-                        {/* Output Area */}
-                        <TerminalOutput
-                            lines={state.lines}
-                            outputRef={refs.outputRef}
-                        />
+                        <div className={combineClasses("flex flex-col h-full transition-opacity duration-300", isLoading ? "opacity-0" : "opacity-100")}>
+                            {/* Output Area */}
+                            <TerminalOutput
+                                lines={state.lines}
+                                outputRef={refs.outputRef}
+                            />
 
-                        {/* Input Area */}
-                        <TerminalInput
-                            currentInput={state.currentInput}
-                            onInputChange={actions.updateInput}
-                            onKeyDown={handlers.handleKeyDown}
-                            inputRef={refs.inputRef}
-                            disabled={false}
-                        />
+                            {/* Input Area */}
+                            <TerminalInput
+                                currentInput={state.currentInput}
+                                onInputChange={actions.updateInput}
+                                onKeyDown={handlers.handleKeyDown}
+                                inputRef={refs.inputRef}
+                                disabled={false}
+                            />
+                        </div>
 
                         {/* Cybernetic loading overlay */}
                         {isLoading && (
                             <div className="absolute inset-0 flex items-center justify-center bg-black/90 z-20 pointer-events-none">
-                                <div className="font-mono text-center space-y-2" style={{ color: colors.primary }}>
-                                    <div className="flex items-center justify-center space-x-2">
-                                        <div className="w-2 h-2 animate-bounce" style={{ backgroundColor: colors.primary, animationDelay: '0ms' }} />
-                                        <div className="w-2 h-2 animate-bounce" style={{ backgroundColor: colors.primary, animationDelay: '100ms' }} />
-                                        <div className="w-2 h-2 animate-bounce" style={{ backgroundColor: colors.primary, animationDelay: '200ms' }} />
+                                <div className="font-mono text-xs md:text-sm space-y-3 w-64 max-w-[80vw]">
+                                    <div className="text-center uppercase tracking-[0.35em] text-[var(--theme-text-muted)]">
+                                        INITIALIZING
                                     </div>
-                                    <div className="animate-pulse">SYSTEM INITIALIZATION</div>
+                                    <div className="h-1.5 rounded-full bg-white/10 border border-white/5 overflow-hidden">
+                                        <div
+                                            className="h-full rounded-full"
+                                            style={{
+                                                width: `${loadingProgress}%`,
+                                                background: `linear-gradient(90deg, ${colors.primary}, ${colors.accent})`,
+                                                boxShadow: `0 0 12px ${colors.primary}66`,
+                                                transition: 'width 140ms ease-out'
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="flex items-center justify-between text-[var(--theme-text-muted)] text-[10px]">
+                                        <span>CORE ONLINE</span>
+                                        <span>{Math.round(loadingProgress)}%</span>
+                                    </div>
                                 </div>
                             </div>
                         )}

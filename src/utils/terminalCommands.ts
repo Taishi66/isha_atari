@@ -45,11 +45,14 @@ const createLine = (
 // ============================================================================
 
 export const INITIAL_LINES: readonly TerminalLine[] = [
-  createLine("isha@system:~/portfolio$ # Initializing. . .", 'system'),
-  createLine("Linux version 5.19.0-cybernetic (isha@system) #1 SMP PREEMPT_DYNAMIC", 'system'),
-  createLine("Last login: Wed Dec 25 10:30:42 2048 from 127.0.0.1", 'info'),
+  createLine("[CYBERNETIC NODE] ⇢ Portfolio Shell v3.7", 'system'),
+  createLine("[NEURAL LINK] Establishing encrypted channel...", 'system'),
+  createLine("[AUTH] Biometrics spoofed • Access level: VISITOR", 'success'),
+  createLine("[CORE] Spinning up modules → UI_RENDERER • STATE_MANAGER • SIGNAL_GRID", 'system'),
+  createLine("[MEMORY] Syncing case files and mission logs", 'system'),
+  createLine("[STATUS] Systems nominal • Latency 0.42ms • Power 99%", 'success'),
   createLine("", 'output'),
-  createLine("Type 'help' or 'ls' to explore", 'info'),
+  createLine("Tap 'help' to list directives or 'ls' to surface directories.", 'info'),
   createLine("", 'output'),
 ];
 
