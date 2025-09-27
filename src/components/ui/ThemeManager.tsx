@@ -107,7 +107,7 @@ const ThemeManager = () => {
         <div
             ref={containerRef}
             onMouseDown={handleMouseDown}
-            className={`fixed z-[9998] select-none transition-all duration-200 ${isDragging ? 'cursor-grabbing' : 'cursor-grab'
+            className={`fixed z-[9998] select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'
                 }`}
             style={{
                 left: position.x,

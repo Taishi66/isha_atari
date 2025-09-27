@@ -45,11 +45,11 @@ const createLine = (
 // ============================================================================
 
 export const INITIAL_LINES: readonly TerminalLine[] = [
-  createLine("isha@system:~/portfolio$ # Welcome to the interactive portfolio", 'system'),
+  createLine("isha@system:~/portfolio$ # Initializing. . .", 'system'),
   createLine("Linux version 5.19.0-cybernetic (isha@system) #1 SMP PREEMPT_DYNAMIC", 'system'),
-  createLine("Last login: Wed Dec 25 10:30:42 2024 from 127.0.0.1", 'info'),
+  createLine("Last login: Wed Dec 25 10:30:42 2048 from 127.0.0.1", 'info'),
   createLine("", 'output'),
-  createLine("Type 'help' or 'ls' to explore this portfolio system", 'info'),
+  createLine("Type 'help' or 'ls' to explore", 'info'),
   createLine("", 'output'),
 ];
 

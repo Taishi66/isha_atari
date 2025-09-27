@@ -53,43 +53,42 @@ const TerminalHeader = memo(({
 }) => {
     const { colors } = useTheme();
     return (
-    <header className={TERMINAL_STYLES.header.container}>
-        <div className={TERMINAL_STYLES.header.leftSection}>
-            <div className="flex items-center space-x-2">
-                {/* Cybernetic control buttons */}
+        <header className={TERMINAL_STYLES.header.container}>
+            <div className={TERMINAL_STYLES.header.leftSection}>
                 <div className="flex items-center space-x-2">
-                    <div className="flex items-center space-x-1.5 px-2 py-1 rounded bg-black/30 border" style={{ borderColor: colors.border.primary }}>
-                        <button
-                            className="w-2 h-2 bg-red-400/80 hover:bg-red-400 transition-all duration-200 hover:shadow-[0_0_6px_rgba(248,113,113,0.6)] cursor-pointer"
-                            onClick={onClose}
-                            aria-label="Close terminal"
-                            title="Close terminal"
-                        />
-                        <button
-                            className="w-2 h-2 transition-all duration-200 cursor-pointer" style={{ backgroundColor: `${colors.primary}CC`, '--hover-bg': colors.primary, '--hover-shadow': `0_0_6px_${colors.primary}99` } as React.CSSProperties} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = colors.primary; e.currentTarget.style.boxShadow = `0 0 6px ${colors.primary}99`; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = `${colors.primary}CC`; e.currentTarget.style.boxShadow = 'none'; }}
-                            onClick={onToggleMaximize}
-                            aria-label={isMaximized ? "Restore terminal" : "Maximize terminal"}
-                            title={isMaximized ? "Restore terminal" : "Maximize terminal"}
-                        />
+                    {/* Cybernetic control buttons */}
+                    <div className="flex items-center space-x-2">
+                        <div className="flex items-center space-x-1.5 px-2 py-1 rounded bg-black/30 border" style={{ borderColor: colors.border.primary }}>
+                            <button
+                                className="w-3 h-3 bg-red-400/80 hover:bg-red-400 transition-all duration-200 hover:shadow-[0_0_6px_rgba(248,113,113,0.6)] cursor-pointer"
+                                onClick={onClose}
+                                aria-label="Close terminal"
+                                title="Close terminal"
+                            />
+                            <button
+                                className="w-3 h-3 transition-all duration-200 cursor-pointer" style={{ backgroundColor: `${colors.primary}CC`, '--hover-bg': colors.primary, '--hover-shadow': `0_0_6px_${colors.primary}99` } as React.CSSProperties} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = colors.primary; e.currentTarget.style.boxShadow = `0 0 6px ${colors.primary}99`; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = `${colors.primary}CC`; e.currentTarget.style.boxShadow = 'none'; }}
+                                onClick={onToggleMaximize}
+                                aria-label={isMaximized ? "Restore terminal" : "Maximize terminal"}
+                                title={isMaximized ? "Restore terminal" : "Maximize terminal"}
+                            />
+                        </div>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                        <span className={`${TERMINAL_STYLES.header.title} tracking-wider`}>
+                            isha@system:~/portfolio$
+                        </span>
                     </div>
                 </div>
-                <div className="flex items-center space-x-2">
-                    <div className="w-1 h-4 animate-pulse" style={{ backgroundColor: colors.primary }} />
-                    <span className={`${TERMINAL_STYLES.header.title} tracking-wider`}>
-                        isha@system:~/portfolio$
-                    </span>
-                </div>
             </div>
-        </div>
-        {/* System status indicators */}
-        <div className="hidden sm:flex items-center text-xs font-mono space-x-4" style={{ color: colors.text.muted }}>
-            <span className="flex items-center space-x-1">
-                <div className="w-1 h-1 rounded-full animate-pulse" style={{ backgroundColor: colors.success }} />
-                <span>ACTIVE</span>
-            </span>
-            <span>ESC:EXIT</span>
-        </div>
-    </header>
+            {/* System status indicators */}
+            <div className="hidden sm:flex items-center text-xs font-mono space-x-4" style={{ color: colors.text.muted }}>
+                <span className="flex items-center space-x-1">
+                    <div className="w-1 h-1 rounded-full animate-pulse" style={{ backgroundColor: colors.success }} />
+                    <span>ACTIVE</span>
+                </span>
+                <span>ESC:EXIT</span>
+            </div>
+        </header>
     );
 });
 
@@ -108,55 +107,55 @@ const TerminalOutput = memo(({
 }) => {
     const { colors } = useTheme();
     return (
-    <div
-        ref={outputRef}
-        className={TERMINAL_STYLES.content.output}
-        role="log"
-        aria-live="polite"
-        aria-label="Terminal output"
-    >
-        <div className={TERMINAL_STYLES.content.outputInner}>
-            {lines.map((line, index) => {
-                // Get the base className but override colors
-                const baseClassName = getLineClassName(line);
-                // Remove hardcoded color classes and apply theme colors
-                const themeAwareClassName = baseClassName
-                    .replace(/text-\[#00D9FF\]/g, '')
-                    .replace(/text-cyan-\d+/g, '');
+        <div
+            ref={outputRef}
+            className={TERMINAL_STYLES.content.output}
+            role="log"
+            aria-live="polite"
+            aria-label="Terminal output"
+        >
+            <div className={TERMINAL_STYLES.content.outputInner}>
+                {lines.map((line, index) => {
+                    // Get the base className but override colors
+                    const baseClassName = getLineClassName(line);
+                    // Remove hardcoded color classes and apply theme colors
+                    const themeAwareClassName = baseClassName
+                        .replace(/text-\[#00D9FF\]/g, '')
+                        .replace(/text-cyan-\d+/g, '');
 
-                // Determine color based on line type
-                const getThemeColor = (lineType: string) => {
-                    switch (lineType) {
-                        case 'command':
-                        case 'system':
-                            return colors.primary;
-                        case 'error':
-                            return '#EF4444'; // Keep red for errors
-                        case 'success':
-                            return colors.success;
-                        case 'warning':
-                            return '#F59E0B'; // Keep orange for warnings
-                        default:
-                            return colors.text.secondary;
-                    }
-                };
+                    // Determine color based on line type
+                    const getThemeColor = (lineType: string) => {
+                        switch (lineType) {
+                            case 'command':
+                            case 'system':
+                                return colors.primary;
+                            case 'error':
+                                return '#EF4444'; // Keep red for errors
+                            case 'success':
+                                return colors.success;
+                            case 'warning':
+                                return '#F59E0B'; // Keep orange for warnings
+                            default:
+                                return colors.text.secondary;
+                        }
+                    };
 
-                return (
-                    <div
-                        key={line.id || `${index}-${line.timestamp?.getTime() || 0}`}
-                        className={themeAwareClassName}
-                        style={{
-                            animationDelay: `${Math.min(index * 50, 1000)}ms`,
-                            animationFillMode: "backwards",
-                            color: getThemeColor(line.type),
-                        }}
-                    >
-                        {line.content || "\u00A0"}
-                    </div>
-                );
-            })}
+                    return (
+                        <div
+                            key={line.id || `${index}-${line.timestamp?.getTime() || 0}`}
+                            className={themeAwareClassName}
+                            style={{
+                                animationDelay: `${Math.min(index * 50, 1000)}ms`,
+                                animationFillMode: "backwards",
+                                color: getThemeColor(line.type),
+                            }}
+                        >
+                            {line.content || "\u00A0"}
+                        </div>
+                    );
+                })}
+            </div>
         </div>
-    </div>
     );
 }, (prevProps, nextProps) => {
     // Re-render when lines change or theme might have changed
@@ -412,14 +411,6 @@ const TerminalWindow = ({ isOpen, onClose, className, testId }: TerminalWindowPr
                         <div className="absolute inset-0 bg-gradient-to-br via-transparent animate-pulse" style={{ backgroundImage: `linear-gradient(to bottom right, ${colors.primary}0D, transparent, ${colors.primary}0D)` }} />
                     </div>
 
-                    {/* Minimal scanning animation */}
-                    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-                        <div className="w-full h-px bg-gradient-to-r from-transparent to-transparent animate-scanSlow absolute" style={{ backgroundImage: `linear-gradient(to right, transparent, ${colors.primary}33, transparent)` }} />
-                        <div className="w-full h-px bg-gradient-to-r from-transparent to-transparent animate-scanSlow absolute" style={{ backgroundImage: `linear-gradient(to right, transparent, ${colors.primary}1A, transparent)`, animationDelay: '2s' }} />
-                    </div>
-
-
-
                     {/* Header */}
                     <TerminalHeader
                         isMaximized={state.isMaximized}
@@ -430,9 +421,7 @@ const TerminalWindow = ({ isOpen, onClose, className, testId }: TerminalWindowPr
                     {/* Terminal Content */}
                     <main className={combineClasses(TERMINAL_STYLES.content.container, "relative z-10 flex-1 min-h-0")}>
                         {/* Minimal content area effects */}
-                        <div className="absolute inset-0 overflow-hidden pointer-events-none z-5">
-                            <div className="w-full h-px bg-gradient-to-r from-transparent to-transparent animate-scanSlow absolute" style={{ backgroundImage: `linear-gradient(to right, transparent, ${colors.primary}0D, transparent)`, animationDelay: '4s' }} />
-                        </div>
+
 
                         {/* Output Area */}
                         <TerminalOutput

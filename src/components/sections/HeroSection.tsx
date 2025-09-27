@@ -18,6 +18,7 @@ const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
     const { recordRender } = useComponentPerformance('HeroSection');
     const [activeModule, setActiveModule] = useState<number>(0);
     const [hoveredTech, setHoveredTech] = useState<Record<string, boolean>>({}); // State to track hovered tech for toggle effect
+    const [isTerminalHovered, setIsTerminalHovered] = useState<boolean>(false);
 
     useEffect(() => {
         recordRender();
@@ -139,7 +140,7 @@ const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
                         <div className="space-y-6">
                             {/* Terminal Access Panel */}
                             <div
-                                className="relative bg-black/40 border p-6 cursor-pointer group transition-all duration-300" style={{ borderColor: 'var(--theme-border-primary)' }} onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--theme-border-secondary)'} onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--theme-border-primary)'}
+                                className="relative bg-black/40 border p-6 cursor-pointer group transition-all duration-300" style={{ borderColor: 'var(--theme-border-primary)' }} onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--theme-border-secondary)'; setIsTerminalHovered(true); }} onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--theme-border-primary)'; setIsTerminalHovered(false); }}
                                 onClick={onTerminalClick}
                             >
                                 {/* Corner indicators */}
@@ -160,10 +161,24 @@ const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
                                             <Terminal size={24} style={{ color: 'var(--theme-primary)' }} />
                                         </div>
                                         <div className="space-y-1">
-                                            <p className="font-mono text-sm text-white/90 transition-colors duration-300" onMouseEnter={(e) => e.currentTarget.style.color = 'var(--theme-accent)'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.9)'}>
+                                            <p
+                                                className="font-mono text-sm transition-colors duration-300"
+                                                style={{
+                                                    color: isTerminalHovered
+                                                        ? "var(--theme-accent)"
+                                                        : "rgba(255, 255, 255, 0.9)",
+                                                }}
+                                            >
                                                 ACCESS_TERMINAL
                                             </p>
-                                            <p className="text-xs text-gray-400/80">
+                                            <p
+                                                className="text-xs transition-colors duration-300"
+                                                style={{
+                                                    color: isTerminalHovered
+                                                        ? "rgba(209, 213, 219, 0.8)"
+                                                        : "rgba(156, 163, 175, 0.8)",
+                                                }}
+                                            >
                                                 Interactive command interface
                                             </p>
                                         </div>
