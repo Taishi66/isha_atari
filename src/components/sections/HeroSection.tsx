@@ -17,6 +17,7 @@ interface HeroSectionProps {
 const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
     const { recordRender } = useComponentPerformance('HeroSection');
     const [activeModule, setActiveModule] = useState<number>(0);
+    const [hoveredTech, setHoveredTech] = useState<Record<string, boolean>>({}); // State to track hovered tech for toggle effect
 
     useEffect(() => {
         recordRender();
@@ -79,7 +80,7 @@ const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
                         </div>
 
                         {/* Description Panel */}
-                        <div className="relative bg-black/30 border p-6 mb-8 group transition-all duration-300" style={{ borderColor: 'var(--theme-border-primary)' }} onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--theme-border-secondary)'} onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--theme-border-primary)'}>
+                        <div className="relative bg-black/40 border p-6 mb-8 group transition-all duration-300" style={{ borderColor: 'var(--theme-border-primary)' }} onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--theme-border-secondary)'} onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--theme-border-primary)'}>
                             {/* Corner indicators */}
                             <div className="absolute top-2 left-2 w-2 h-2 border-t border-l opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ borderColor: 'var(--theme-border-active)' }} />
                             <div className="absolute top-2 right-2 w-2 h-2 border-t border-r opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ borderColor: 'var(--theme-border-active)' }} />
@@ -108,7 +109,13 @@ const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
                                 {CORE_TECH.map((tech, index) => (
                                     <div
                                         key={tech}
-                                        className="relative bg-black/40 border p-3 cursor-pointer group transition-all duration-300" style={{ borderColor: 'var(--theme-border-primary)' }} onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--theme-border-secondary)'; e.currentTarget.style.backgroundColor = 'var(--theme-bg-active)'; }} onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--theme-border-primary)'; e.currentTarget.style.backgroundColor = 'transparent'; }}
+                                        className="relative bg-black/40 border p-3 cursor-pointer group transition-all duration-300"
+                                        style={{
+                                            borderColor: hoveredTech[tech] ? 'var(--theme-border-secondary)' : 'var(--theme-border-primary)',
+                                            backgroundColor: hoveredTech[tech] ? 'var(--theme-bg-active)' : 'transparent',
+                                        }}
+                                        onMouseEnter={() => setHoveredTech(prev => ({ ...prev, [tech]: !prev[tech] }))}
+                                        onMouseLeave={() => { /* State persists, do nothing on leave */ }}
                                     >
                                         {/* Hover-triggered active indicator */}
                                         <div className="absolute top-1 right-1 w-1 h-1 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-300" style={{ backgroundColor: 'var(--theme-primary)' }} />
