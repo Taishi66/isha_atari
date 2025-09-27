@@ -424,7 +424,7 @@ const TerminalWindow = ({ isOpen, onClose, className, testId }: TerminalWindowPr
                         '--terminal-border-active': colors.border.active,
                         '--terminal-border-primary': colors.border.primary,
                         borderColor: colors.border.active,
-                        boxShadow: `0 0 30px ${colors.primary}33`
+                        boxShadow: `0 0 100px ${colors.primary}33`
                     } as React.CSSProperties}
                 >
                     {/* Minimal cybernetic border effects */}
