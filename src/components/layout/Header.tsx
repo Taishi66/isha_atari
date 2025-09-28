@@ -13,7 +13,7 @@ const Header = ({ currentTime, onTerminalClick }: HeaderProps) => {
             <div className="max-w mx-auto flex justify-between items-center">
                 <div className="flex items-center space-x-6 text-xs font-mono" style={{ color: 'var(--theme-primary)' }}>
                     <span>{HEADER_ONLINE}</span>
-                    <span className="text-gray-500">|</span>
+                    <span className="text-gray-500" style={{ color: 'var(--theme-primary)' }}>|</span>
                     <span>
                         {LOCATION}
                         {formatTime(currentTime)}
