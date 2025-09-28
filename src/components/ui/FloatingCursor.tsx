@@ -1,49 +1,86 @@
 import { useEffect, useState, useCallback } from "react";
 
+const PULSE_DURATION = 600;
+
+type Pulse = { id: number };
+
 const FloatingCursor = () => {
-  const [cursorPosition, setCursorPosition] = useState<{ x: number; y: number }>({
-    x: 0,
-    y: 0,
-  });
+    const [cursorPosition, setCursorPosition] = useState<{ x: number; y: number }>({
+        x: 0,
+        y: 0,
+    });
+    const [pulses, setPulses] = useState<Pulse[]>([]);
 
-  const updateCursorPosition = useCallback((e: MouseEvent) => {
-    // Convert page coordinates to viewport coordinates for fixed positioning
-    const x = e.clientX;
-    const y = e.clientY;
+    const updateCursorPosition = useCallback((e: MouseEvent) => {
+        const x = e.clientX;
+        const y = e.clientY;
+        setCursorPosition({ x, y });
+    }, []);
 
-    setCursorPosition({ x, y });
-  }, []);
+    const triggerPulse = useCallback(() => {
+        const id = Date.now() + Math.random();
+        setPulses(prev => [...prev, { id }]);
 
-  useEffect(() => {
-    // Use mousemove on document for better coverage
-    document.addEventListener("mousemove", updateCursorPosition);
+        window.setTimeout(() => {
+            setPulses(prev => prev.filter(pulse => pulse.id !== id));
+        }, PULSE_DURATION);
+    }, []);
 
-    return () => {
-      document.removeEventListener("mousemove", updateCursorPosition);
-    };
-  }, [updateCursorPosition]);
+    useEffect(() => {
+        document.addEventListener("mousemove", updateCursorPosition);
+        document.addEventListener("mousedown", triggerPulse);
 
-  return (
-    <div
-      className="fixed pointer-events-none z-50 w-32 h-32 -translate-x-1/2 -translate-y-1/2"
-      style={{
-        left: cursorPosition.x,
-        top: cursorPosition.y,
-        transition: 'all 0.1s ease-out',
-      }}
-    >
-      {/* Minimal cybernetic glow - only visible, no automatic animation */}
-      <div className="absolute inset-0 rounded-full blur-xl" style={{ backgroundColor: 'var(--theme-bg-active)' }} />
+        return () => {
+            document.removeEventListener("mousemove", updateCursorPosition);
+            document.removeEventListener("mousedown", triggerPulse);
+        };
+    }, [updateCursorPosition, triggerPulse]);
 
-      {/* Precise center dot */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="w-1 h-1 rounded-full opacity-60" style={{ backgroundColor: 'var(--theme-accent)' }} />
-      </div>
+    return (
+        <div
+            className="fixed pointer-events-none z-50 w-32 h-32 -translate-x-1/2 -translate-y-1/2"
+            style={{
+                left: cursorPosition.x,
+                top: cursorPosition.y,
+                transition: 'all 0.1s ease-out',
+            }}
+        >
+            {/* Amplified cybernetic glow */}
+            <div
+                className="absolute inset-0 rounded-full blur-3xl opacity-80"
+                style={{
+                    background: 'radial-gradient(circle, rgba(0,217,255,0.25), rgba(0,217,255,0))',
+                    filter: 'drop-shadow(0 0 12px rgba(0,217,255,0.45))',
+                }}
+            />
 
-      {/* Subtle ring indicator */}
-      <div className="absolute inset-4 rounded-full border opacity-40" style={{ borderColor: 'var(--theme-border-primary)' }} />
-    </div>
-  );
+            {/* Animated rings on click */}
+            {pulses.map(pulse => (
+                <div
+                    key={pulse.id}
+                    className="absolute inset-0 rounded-full border animate-ping"
+                    style={{
+                        borderColor: 'rgba(0,217,255,0.3)',
+                        animationDuration: '2.5s',
+                    }}
+                />
+            ))}
+
+            {/* Precise center dot */}
+            <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-1.5 h-1.5 rounded-full opacity-90" style={{ backgroundColor: 'var(--theme-accent)' }} />
+            </div>
+
+            {/* Secondary ring indicator */}
+            <div
+                className="absolute inset-4 rounded-full border opacity-60"
+                style={{
+                    borderColor: 'var(--theme-border-active)',
+                    boxShadow: '0 0 8px rgba(0,217,255,0.35)',
+                }}
+            />
+        </div>
+    );
 };
 
 export default FloatingCursor;

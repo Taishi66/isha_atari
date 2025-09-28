@@ -3,10 +3,9 @@ import { Linkedin, Code, Contrast, TrendingUp, Github } from "lucide-react";
 // Data arrays and complex objects
 export const CORE_TECH_TITLE = "CORE_TECHNOLOGIES";
 export const CORE_TECH = [
-  "JavaScript",
   "TypeScript",
   "React",
-  "Angular",
+  "React Native",
   "Tailwind",
   "SCSS",
   "Vite",
