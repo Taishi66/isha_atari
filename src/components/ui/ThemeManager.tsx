@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from "react";
-import { Palette, ChevronUp, ChevronDown } from "lucide-react";
+import { Settings2, ChevronUp, ChevronDown } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 
 const ThemeManager = () => {
@@ -286,7 +286,7 @@ const ThemeManager = () => {
                         }`} style={{ borderColor: 'var(--theme-border-active)' }} />
 
                     <div className="flex items-center space-x-3">
-                        <Palette size={16} style={{ color: 'var(--theme-primary)' }} />
+                        <Settings2 size={16} style={{ color: 'var(--theme-primary)' }} />
                         <div className="flex flex-col items-start">
                             <span className="text-xs font-mono text-white/90" style={{ color: currentTheme.colors.text.primary }}>THEME</span>
                             <span className="text-xs font-mono" style={{ color: currentTheme.colors.text.muted }}>
