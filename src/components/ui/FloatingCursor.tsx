@@ -10,6 +10,7 @@ const FloatingCursor = () => {
         y: 0,
     });
     const [pulses, setPulses] = useState<Pulse[]>([]);
+    const [isTouchDevice, setIsTouchDevice] = useState<boolean>(false);
 
     const updateCursorPosition = useCallback((e: MouseEvent) => {
         const x = e.clientX;
@@ -27,22 +28,36 @@ const FloatingCursor = () => {
     }, []);
 
     useEffect(() => {
-        document.addEventListener("mousemove", updateCursorPosition);
-        document.addEventListener("mousedown", triggerPulse);
+        // Detect touch devices
+        const checkTouchDevice = () => {
+            setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+        };
+
+        checkTouchDevice();
+
+        if (!isTouchDevice) {
+            document.addEventListener("mousemove", updateCursorPosition);
+            document.addEventListener("mousedown", triggerPulse);
+        }
 
         return () => {
             document.removeEventListener("mousemove", updateCursorPosition);
             document.removeEventListener("mousedown", triggerPulse);
         };
-    }, [updateCursorPosition, triggerPulse]);
+    }, [updateCursorPosition, triggerPulse, isTouchDevice]);
+
+    // Don't render on touch devices
+    if (isTouchDevice) {
+        return null;
+    }
 
     return (
         <div
-            className="fixed pointer-events-none z-50 w-32 h-32 -translate-x-1/2 -translate-y-1/2"
+            className="fixed pointer-events-none z-50 w-24 lg:w-32 h-24 lg:h-32 -translate-x-1/2 -translate-y-1/2"
             style={{
                 left: cursorPosition.x,
                 top: cursorPosition.y,
-                transition: 'all 0.1s ease-out',
+                transition: 'transform 0.1s ease-out',
             }}
         >
             {/* Amplified cybernetic glow */}

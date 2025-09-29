@@ -2,7 +2,11 @@ import { useState, useCallback, useRef, useEffect } from "react";
 import { Settings2, ChevronUp, ChevronDown } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 
-const ThemeManager = () => {
+interface ThemeManagerProps {
+    isHeaderMode?: boolean;
+}
+
+const ThemeManager = ({ isHeaderMode = false }: ThemeManagerProps) => {
     const { currentTheme, themes, setTheme } = useTheme();
     const [isExpanded, setIsExpanded] = useState<boolean>(false);
     const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -24,8 +28,10 @@ const ThemeManager = () => {
         setTheme(themeId);
     }, [setTheme]);
 
-    // Drag handlers - instant drag on mousedown
+    // Drag handlers - instant drag on mousedown (disabled in header mode)
     const handleMouseDown = useCallback((e: React.MouseEvent) => {
+        if (isHeaderMode) return;
+
         // Prevent dragging when clicking on theme selection items
         const target = e.target as HTMLElement;
         if (target.closest('[data-theme-item]')) {
@@ -40,7 +46,7 @@ const ThemeManager = () => {
             y: e.clientY - position.y
         });
         e.preventDefault();
-    }, [position]);
+    }, [position, isHeaderMode]);
 
     const handleMouseMove = useCallback((e: MouseEvent) => {
         if (!isDragging) return;
@@ -95,23 +101,33 @@ const ThemeManager = () => {
         }
     }, [isDragging, handleMouseMove, handleMouseUp]);
 
-    // Initialize position (bottom-right by default)
+    // Initialize position (responsive positioning) - only in floating mode
     useEffect(() => {
-        setPosition({
-            x: window.innerWidth - 280,
-            y: window.innerHeight - 120
-        });
-    }, []);
+        if (isHeaderMode) return;
+
+        const updatePosition = () => {
+            const isMobile = window.innerWidth < 640;
+            const isTablet = window.innerWidth < 1024;
+
+            setPosition({
+                x: Math.max(20, window.innerWidth - (isMobile ? 200 : isTablet ? 240 : 280)),
+                y: Math.max(20, window.innerHeight - (isMobile ? 100 : 120))
+            });
+        };
+
+        updatePosition();
+        window.addEventListener('resize', updatePosition);
+        return () => window.removeEventListener('resize', updatePosition);
+    }, [isHeaderMode]);
 
     return (
         <div
             ref={containerRef}
             onMouseDown={handleMouseDown}
-            className={`fixed z-[9998] select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'
+            className={`${isHeaderMode ? 'relative' : 'fixed z-[9998]'} select-none ${!isHeaderMode && isDragging ? 'cursor-grabbing' : !isHeaderMode ? 'cursor-grab' : ''
                 }`}
             style={{
-                left: position.x,
-                top: position.y,
+                ...(isHeaderMode ? {} : { left: position.x, top: position.y }),
                 backgroundColor: currentTheme.colors.background.primary, // Harmonize background
                 borderColor: currentTheme.colors.border.primary, // Harmonize border
             } as React.CSSProperties}
@@ -119,11 +135,11 @@ const ThemeManager = () => {
             {/* Main Theme Manager Container */}
             <div className="relative">
                 {/* Expanded Theme Panel */}
-                <div className={`absolute bottom-16 right-0 transition-all duration-300 ease-out ${isExpanded
+                <div className={`absolute ${isHeaderMode ? 'top-16 right-0' : 'bottom-16 right-0'} transition-all duration-300 ease-out ${isExpanded
                     ? 'opacity-100 translate-y-0 pointer-events-auto'
-                    : 'opacity-0 translate-y-4 pointer-events-none'
+                    : `opacity-0 ${isHeaderMode ? '-translate-y-4' : 'translate-y-4'} pointer-events-none`
                     }`}>
-                    <div className="bg-black/80 backdrop-blur-sm border min-w-[200px]" style={{ borderColor: currentTheme.colors.border.primary, backgroundColor: currentTheme.colors.background.secondary }} >
+                    <div className="bg-black/80 backdrop-blur-sm border min-w-[180px] sm:min-w-[200px] max-w-[90vw]" style={{ borderColor: currentTheme.colors.border.primary, backgroundColor: currentTheme.colors.background.secondary }} >
                         {/* Header */}
                         <div className="border-b p-3" style={{ borderColor: currentTheme.colors.border.primary, backgroundColor: currentTheme.colors.background.primary }} >
                             <div className="flex items-center justify-between">
@@ -141,7 +157,7 @@ const ThemeManager = () => {
                                     key={theme.id}
                                     data-theme-item
                                     onClick={() => handleThemeSelect(theme.id, theme.status)}
-                                    className={`relative group p-2 transition-all duration-200 cursor-pointer ${currentTheme.id === theme.id
+                                    className={`relative group p-3 sm:p-2 transition-all duration-200 cursor-pointer min-h-[44px] flex items-center ${currentTheme.id === theme.id
                                         ? 'border border-[var(--theme-border-active)]'
                                         : theme.status === 'locked'
                                             ? 'bg-black/20 border border-gray-700/40 cursor-not-allowed'
@@ -173,14 +189,14 @@ const ThemeManager = () => {
                                         </>
                                     )}
 
-                                    <div className="flex items-center justify-between">
+                                    <div className="flex items-center justify-between w-full">
                                         <div className="flex items-center space-x-3">
                                             {/* Color indicator */}
                                             <div
                                                 className="w-2 h-2 rounded-full border border-gray-600"
                                                 style={{ backgroundColor: theme.status === 'locked' ? '#666' : theme.colors.primary }}
                                             />
-                                            <span className={`text-xs font-mono transition-colors duration-200 ${currentTheme.id === theme.id
+                                            <span className={`text-xs sm:text-sm font-mono transition-colors duration-200 ${currentTheme.id === theme.id
                                                 ? 'text-[var(--theme-accent)]'
                                                 : theme.status === 'locked'
                                                     ? 'text-gray-500'
@@ -250,14 +266,14 @@ const ThemeManager = () => {
                 {/* Main Toggle Button */}
                 <button
                     onClick={handleToggleExpand}
-                    className={`relative group bg-black/80 backdrop-blur-sm border transition-all duration-300 p-3 ${isExpanded
+                    className={`relative group ${isHeaderMode ? 'bg-transparent' : 'bg-black/80 backdrop-blur-sm'} border transition-all duration-300 ${isHeaderMode ? 'p-2 min-h-[44px] min-w-[44px] sm:min-h-auto sm:min-w-auto' : 'p-3'} ${isExpanded
                         ? ''
                         : ''
-                        } ${isDragging ? 'scale-105 shadow-lg' : ''}`}
+                        } ${!isHeaderMode && isDragging ? 'scale-105 shadow-lg' : ''}`}
                     style={{
                         borderColor: isExpanded ? 'var(--theme-border-secondary)' : 'var(--theme-border-primary)',
                         backgroundColor: isExpanded ? 'var(--theme-bg-active)' : 'transparent',
-                        ...(isDragging && {
+                        ...(!isHeaderMode && isDragging && {
                             borderColor: 'var(--theme-border-active)',
                             boxShadow: `0 0 20px var(--theme-primary)`
                         })
@@ -285,14 +301,16 @@ const ThemeManager = () => {
                     <div className={`absolute bottom-1 right-1 w-1 h-1 border-b border-r transition-opacity duration-300 ${isExpanded ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
                         }`} style={{ borderColor: 'var(--theme-border-active)' }} />
 
-                    <div className="flex items-center space-x-3">
+                    <div className={`flex items-center ${isHeaderMode ? 'space-x-2' : 'space-x-3'}`}>
                         <Settings2 size={16} style={{ color: 'var(--theme-primary)' }} />
-                        <div className="flex flex-col items-start">
-                            <span className="text-xs font-mono text-white/90" style={{ color: currentTheme.colors.text.primary }}>THEME</span>
-                            <span className="text-xs font-mono" style={{ color: currentTheme.colors.text.muted }}>
-                                {currentTheme.name}
-                            </span>
-                        </div>
+                        {!isHeaderMode && (
+                            <div className="flex flex-col items-start">
+                                <span className="text-xs font-mono text-white/90" style={{ color: currentTheme.colors.text.primary }}>THEME</span>
+                                <span className="text-xs font-mono" style={{ color: currentTheme.colors.text.muted }}>
+                                    {currentTheme.name}
+                                </span>
+                            </div>
+                        )}
                         {isExpanded ? (
                             <ChevronDown size={12} style={{ color: currentTheme.colors.text.muted }} />
                         ) : (
@@ -306,8 +324,10 @@ const ThemeManager = () => {
                     </div>
                 </button>
 
-                {/* Status indicator */}
-                <div className="absolute -top-2 -right-2 w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                {/* Status indicator - only in floating mode */}
+                {!isHeaderMode && (
+                    <div className="absolute -top-2 -right-2 w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                )}
             </div>
         </div>
     );

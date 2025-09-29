@@ -8,7 +8,6 @@ import {
     FloatingCursor,
     TerminalWindow,
     CyberneticLoader,
-    ThemeManager,
     ErrorBoundary,
 } from "@/components";
 import { useGlitchEffect } from "@/hooks";
@@ -86,8 +85,6 @@ function AppContent() {
             {/* Global FloatingCursor - outside overflow container */}
             <FloatingCursor />
 
-            {/* Global ThemeManager - floating bottom right */}
-            <ThemeManager />
 
             {/* Cybernetic Loader */}
             {isLoading && (
@@ -119,7 +116,6 @@ function AppContent() {
                 <main className="relative z-10">
                     <Header
                         currentTime={currentTime}
-                        onTerminalClick={handleTerminalToggle}
                     />
                     <HeroSection
                         glitchText={glitchText}

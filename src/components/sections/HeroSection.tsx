@@ -32,16 +32,16 @@ const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
     }, []);
 
     return (
-        <section className="min-h-screen flex items-center justify-center px-8 pt-16 relative">
+        <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 lg:pt-28 relative">
             {/* System Status Bar */}
-            <div className="absolute top-24 left-8 right-8">
+            <div className="absolute top-20 sm:top-24 lg:top-28 left-4 right-4 sm:left-6 sm:right-6 lg:left-8 lg:right-8">
                 <div className="max-w-7xl mx-auto">
                     <div className="flex items-center justify-between text-xs font-mono" style={{ color: 'var(--theme-text-muted)' }}>
-                        <div className="flex items-center space-x-4">
+                        <div className="flex items-center space-x-2 sm:space-x-4">
                             <div className="w-1 h-1 rounded-full animate-pulse" style={{ backgroundColor: 'var(--theme-success)' }} />
-                            <span>SYSTEM_ACTIVE</span>
+                            <span className="text-xs">SYSTEM_ACTIVE</span>
                         </div>
-                        <div className="flex items-center space-x-6">
+                        <div className="hidden sm:flex items-center space-x-3 lg:space-x-6">
                             <span>CPU: 42%</span>
                             <span>MEM: 68%</span>
                             <span>CONN: STABLE</span>
@@ -52,9 +52,9 @@ const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
 
             <div className="max-w-7xl w-full">
                 {/* Main Interface Grid */}
-                <div className="grid grid-cols-12 gap-8 items-start">
+                <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-12 items-start">
                     {/* Primary Console - Left */}
-                    <div className="col-span-12 lg:col-span-7">
+                    <div className="lg:col-span-7">
                         {/* Header Matrix */}
                         <div className="mb-12">
                             <div className="flex items-center space-x-4 mb-3">
@@ -65,15 +65,15 @@ const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
                             </div>
 
                             {/* Identity Display */}
-                            <div className="space-y-4">
-                                <h1 className="text-4xl lg:text-6xl font-mono font-light tracking-wider leading-none">
+                            <div className="space-y-4 lg:space-y-6">
+                                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-mono font-light tracking-wider leading-tight">
                                     <span className="block text-white/95 glitch-text">
                                         {glitchText}
                                     </span>
                                 </h1>
-                                <div className="flex items-center space-x-4">
-                                    <div className="h-px w-16 bg-gradient-to-r to-transparent" style={{ backgroundImage: `linear-gradient(to right, var(--theme-primary), transparent)` }} />
-                                    <p className="text-lg font-mono font-light" style={{ color: 'var(--theme-accent)' }}>
+                                <div className="flex items-center space-x-3 sm:space-x-4">
+                                    <div className="h-px w-12 sm:w-16 bg-gradient-to-r to-transparent" style={{ backgroundImage: `linear-gradient(to right, var(--theme-primary), transparent)` }} />
+                                    <p className="text-sm sm:text-base lg:text-lg font-mono font-light" style={{ color: 'var(--theme-accent)' }}>
                                         {HERO_JOB_TITLE}
                                     </p>
                                 </div>
@@ -81,17 +81,17 @@ const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
                         </div>
 
                         {/* Description Panel */}
-                        <div className="relative bg-black/40 border p-6 mb-8 group transition-all duration-300" style={{ borderColor: 'var(--theme-border-primary)' }} onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--theme-border-secondary)'} onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--theme-border-primary)'}>
+                        <div className="relative bg-black/40 border p-4 sm:p-6 mb-6 sm:mb-8 group transition-all duration-300" style={{ borderColor: 'var(--theme-border-primary)' }} onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--theme-border-secondary)'} onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--theme-border-primary)'}>
                             {/* Corner indicators */}
                             <div className="absolute top-2 left-2 w-2 h-2 border-t border-l opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ borderColor: 'var(--theme-border-active)' }} />
                             <div className="absolute top-2 right-2 w-2 h-2 border-t border-r opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ borderColor: 'var(--theme-border-active)' }} />
 
-                            <div className="space-y-4">
+                            <div className="space-y-3 sm:space-y-4">
                                 <div className="flex items-center justify-between">
                                     <div className="text-xs font-mono" style={{ color: 'var(--theme-text-muted)' }}>DESCRIPTION_INTERFACE</div>
                                     <div className="w-1 h-1 rounded-full animate-pulse" style={{ backgroundColor: 'var(--theme-primary)' }} />
                                 </div>
-                                <p className="text-sm text-gray-400/90 leading-relaxed font-light">
+                                <p className="text-sm sm:text-base text-gray-400/90 leading-relaxed font-light">
                                     {HERO_DESC}
                                 </p>
                             </div>
@@ -106,11 +106,11 @@ const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                            <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3">
                                 {CORE_TECH.map((tech, index) => (
                                     <div
                                         key={tech}
-                                        className="relative bg-black/40 border p-3 cursor-pointer group transition-all duration-300"
+                                        className="relative bg-black/40 border p-3 sm:p-4 cursor-pointer group transition-all duration-300 min-h-[44px] flex items-center"
                                         style={{
                                             borderColor: hoveredTech[tech] ? 'var(--theme-border-secondary)' : 'var(--theme-border-primary)',
                                             backgroundColor: hoveredTech[tech] ? 'var(--theme-bg-active)' : 'transparent',
@@ -121,11 +121,11 @@ const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
                                         {/* Hover-triggered active indicator */}
                                         <div className="absolute top-1 right-1 w-1 h-1 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-300" style={{ backgroundColor: 'var(--theme-primary)' }} />
 
-                                        <div className="flex items-center justify-between">
-                                            <span className="text-xs font-mono text-white/90 transition-colors duration-300" onMouseEnter={(e) => e.currentTarget.style.color = 'var(--theme-accent)'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.9)'}>
+                                        <div className="flex items-center justify-between w-full">
+                                            <span className="text-xs sm:text-sm font-mono text-white/90 transition-colors duration-300" onMouseEnter={(e) => e.currentTarget.style.color = 'var(--theme-accent)'} onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.9)'}>
                                                 {tech}
                                             </span>
-                                            <span className="text-xs font-mono" style={{ color: 'var(--theme-text-muted)' }}>
+                                            <span className="text-xs font-mono ml-2" style={{ color: 'var(--theme-text-muted)' }}>
                                                 {String(index + 1).padStart(2, '0')}
                                             </span>
                                         </div>
@@ -136,11 +136,14 @@ const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
                     </div>
 
                     {/* Terminal Interface - Right */}
-                    <div className="col-span-12 lg:col-span-5">
+                    <div className="lg:col-span-5 mt-8 lg:mt-0">
                         <div className="space-y-6">
                             {/* Terminal Access Panel */}
                             <div
-                                className="relative bg-black/40 border p-6 cursor-pointer group transition-all duration-300" style={{ borderColor: 'var(--theme-border-primary)' }} onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--theme-border-secondary)'; setIsTerminalHovered(true); }} onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--theme-border-primary)'; setIsTerminalHovered(false); }}
+                                className="relative bg-black/40 border p-4 sm:p-6 cursor-pointer group transition-all duration-300 min-h-[44px]"
+                                style={{ borderColor: 'var(--theme-border-primary)' }}
+                                onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--theme-border-secondary)'; setIsTerminalHovered(true); }}
+                                onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--theme-border-primary)'; setIsTerminalHovered(false); }}
                                 onClick={onTerminalClick}
                             >
                                 {/* Corner indicators */}
