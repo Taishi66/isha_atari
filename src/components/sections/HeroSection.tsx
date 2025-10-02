@@ -32,7 +32,7 @@ const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
     }, []);
 
     return (
-        <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 lg:pt-28 relative">
+        <section className="min-h-screen flex items-center justify-center px-3 xs:px-4 sm:px-6 md:px-7 lg:px-8 pt-16 xs:pt-18 sm:pt-20 md:pt-22 lg:pt-24 relative">
             {/* System Status Bar */}
             <div className="absolute top-20 sm:top-24 lg:top-28 left-4 right-4 sm:left-6 sm:right-6 lg:left-8 lg:right-8">
                 <div className="max-w-7xl mx-auto">
@@ -52,9 +52,9 @@ const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
 
             <div className="max-w-7xl w-full">
                 {/* Main Interface Grid */}
-                <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-12 items-start">
+                <div className="grid grid-cols-1 gap-4 sm:gap-6 md:gap-8 lg:grid-cols-12 items-start">
                     {/* Primary Console - Left */}
-                    <div className="lg:col-span-7">
+                    <div className="md:col-span-8 lg:col-span-7">
                         {/* Header Matrix */}
                         <div className="mb-12">
                             <div className="flex items-center space-x-4 mb-3">
@@ -65,15 +65,15 @@ const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
                             </div>
 
                             {/* Identity Display */}
-                            <div className="space-y-4 lg:space-y-6">
-                                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-mono font-light tracking-wider leading-tight">
+                            <div className="space-y-3 sm:space-y-4 md:space-y-5 lg:space-y-6">
+                                <h1 className="text-2xl xs:text-3xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-mono font-light tracking-wider leading-tight">
                                     <span className="block text-white/95 glitch-text">
                                         {glitchText}
                                     </span>
                                 </h1>
                                 <div className="flex items-center space-x-3 sm:space-x-4">
-                                    <div className="h-px w-12 sm:w-16 bg-gradient-to-r to-transparent" style={{ backgroundImage: `linear-gradient(to right, var(--theme-primary), transparent)` }} />
-                                    <p className="text-sm sm:text-base lg:text-lg font-mono font-light" style={{ color: 'var(--theme-accent)' }}>
+                                    <div className="h-px w-8 xs:w-12 sm:w-16 md:w-20 bg-gradient-to-r to-transparent" style={{ backgroundImage: `linear-gradient(to right, var(--theme-primary), transparent)` }} />
+                                    <p className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl font-mono font-light" style={{ color: 'var(--theme-accent)' }}>
                                         {HERO_JOB_TITLE}
                                     </p>
                                 </div>
@@ -106,7 +106,7 @@ const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3">
+                            <div className="grid grid-cols-2 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-2 sm:gap-3">
                                 {CORE_TECH.map((tech, index) => (
                                     <div
                                         key={tech}
@@ -136,7 +136,7 @@ const HeroSection = ({ glitchText, onTerminalClick }: HeroSectionProps) => {
                     </div>
 
                     {/* Terminal Interface - Right */}
-                    <div className="lg:col-span-5 mt-8 lg:mt-0">
+                    <div className="md:col-span-4 lg:col-span-5 mt-6 md:mt-0">
                         <div className="space-y-6">
                             {/* Terminal Access Panel */}
                             <div

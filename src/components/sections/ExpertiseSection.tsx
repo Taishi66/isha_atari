@@ -11,33 +11,33 @@ const ExpertiseSection = () => {
     const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
     return (
-        <section className="py-24 px-8 relative">
+        <section className="py-12 xs:py-16 sm:py-20 md:py-24 px-3 xs:px-4 sm:px-6 md:px-7 lg:px-8 relative">
             {/* Subtle scanning line separator */}
             <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent to-transparent" style={{ backgroundImage: `linear-gradient(to right, transparent, var(--theme-primary), transparent)` }} />
 
             <div className="max-w-7xl mx-auto">
                 {/* Header Matrix */}
-                <div className="mb-16 relative">
-                    <div className="flex items-center space-x-4 mb-2">
+                <div className="mb-8 xs:mb-10 sm:mb-12 md:mb-14 lg:mb-16 relative">
+                    <div className="flex items-center space-x-3 xs:space-x-4 mb-2">
                         <div className="w-2 h-2 border rotate-45 animate-pulse" style={{ borderColor: 'var(--theme-border-secondary)' }} />
-                        <div className="text-xs font-mono tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
+                        <div className="text-xs sm:text-sm font-mono tracking-[0.2em]" style={{ color: 'var(--theme-text-muted)' }}>
                             {SKILLS_TITLE}
                         </div>
                     </div>
-                    <h2 className="text-2xl font-mono font-light text-white/90 mb-1">
+                    <h2 className="text-xl xs:text-2xl sm:text-2xl md:text-3xl lg:text-4xl font-mono font-light text-white/90 mb-1">
                         {SKILLS_SUBTITLE}
                     </h2>
-                    <p className="text-sm font-mono max-w-md" style={{ color: 'var(--theme-accent)' }}>
+                    <p className="text-xs xs:text-sm sm:text-base font-mono max-w-sm xs:max-w-md sm:max-w-lg" style={{ color: 'var(--theme-accent)' }}>
                         {SKILLS_DESC_TITLE}
                     </p>
                 </div>
 
                 {/* Expertise Grid - Modern Cybernetic Layout */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-1 bg-gradient-to-br to-transparent p-1 border" style={{ backgroundImage: `linear-gradient(to bottom right, var(--theme-bg-primary), transparent)`, borderColor: 'var(--theme-border-primary)' }}>
+                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 bg-gradient-to-br to-transparent p-1 border" style={{ backgroundImage: `linear-gradient(to bottom right, var(--theme-bg-primary), transparent)`, borderColor: 'var(--theme-border-primary)' }}>
                     {SKILLS_LIST.map((item, index) => (
                         <div
                             key={index}
-                            className="group relative bg-black/40 border transition-all duration-300 p-6"
+                            className="group relative bg-black/40 border transition-all duration-300 p-4 xs:p-5 sm:p-6"
                             style={{ borderColor: "var(--theme-border-primary)" }}
                             onMouseEnter={(e) => {
                                 e.currentTarget.style.borderColor = "var(--theme-border-secondary)";
@@ -69,7 +69,7 @@ const ExpertiseSection = () => {
                                 {/* Title and description */}
                                 <div className="space-y-2">
                                     <h3
-                                        className="font-mono text-sm transition-colors duration-300"
+                                        className="font-mono text-sm xs:text-sm sm:text-base md:text-lg transition-colors duration-300"
                                         style={{
                                             color:
                                                 hoveredCard === index
@@ -80,7 +80,7 @@ const ExpertiseSection = () => {
                                         {item.title}
                                     </h3>
                                     <p
-                                        className="text-xs leading-relaxed transition-colors duration-300"
+                                        className="text-xs xs:text-xs sm:text-sm leading-relaxed transition-colors duration-300"
                                         style={{
                                             color:
                                                 hoveredCard === index
